@@ -9,7 +9,7 @@ import Image from 'next/image';
 
 export default function DashboardLayoutClient({ children, session }) {
   const pathname = usePathname();
-  const [logo, setLogo] = useState('/logo-kemen.png');
+  const [logo, setLogo] = useState(null);
 
   useEffect(() => {
     const fetchLogo = async () => {
@@ -90,11 +90,13 @@ export default function DashboardLayoutClient({ children, session }) {
             }}
           >✕</button>
           <div style={{ backgroundColor: 'white', padding: '10px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img 
-              src={logo} 
-              alt="Logo Kemen" 
-              style={{ width: '65px', height: '65px', objectFit: 'contain' }} 
-            />
+            {logo && (
+              <img 
+                src={logo} 
+                alt="Logo Kemen" 
+                style={{ width: '65px', height: '65px', objectFit: 'contain' }} 
+              />
+            )}
           </div>
           <div>
             <h2 style={{ color: 'white', fontSize: '1.15rem', fontWeight: 800, fontFamily: 'Outfit, sans-serif', letterSpacing: '0.5px' }}>SI PTSP Dashboard</h2>

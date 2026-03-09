@@ -2,6 +2,7 @@ import { getSettings } from '../actions/settings';
 import { getNews } from '../actions/news';
 import Link from 'next/link';
 import HeroCarousel from '../components/HeroCarousel';
+import { parseDate } from '@/lib/dateUtils';
 
 export default async function Home() {
   const settingsRes = await getSettings();
@@ -97,11 +98,14 @@ export default async function Home() {
         
         .news-grid {
           display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+          grid-template-columns: repeat(3, 1fr);
           gap: 2.5rem;
           margin-top: 3rem;
         }
-        @media (max-width: 480px) {
+        @media (max-width: 1024px) {
+          .news-grid { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+        }
+        @media (max-width: 640px) {
           .news-grid { grid-template-columns: 1fr; }
         }
         
@@ -234,7 +238,7 @@ export default async function Home() {
                       <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{news.content}</p>
                       <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                          <span style={{ color: 'var(--primary-blue)', fontWeight: 700, fontSize: '0.9rem' }}>Selengkapnya &rarr;</span>
-                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{new Date((news.created_at || '').replace(' ', 'T') + 'Z').toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{parseDate(news.created_at).toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
                       </div>
                     </div>
                   </Link>

@@ -2,6 +2,7 @@ import { getDb } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { NextResponse } from 'next/server';
+import { parseDate } from '@/lib/dateUtils';
 
 export async function GET(request, { params }) {
   const session = await getSession();
@@ -88,15 +89,50 @@ export async function GET(request, { params }) {
     y -= 15;
     page.drawText('Status: ' + v.status.toUpperCase(), { x: 50, y, size: 9, font: fontBold, color: v.status === 'approved' ? rgb(0, 0.6, 0) : rgb(0.8, 0, 0) });
     y -= 15;
-    page.drawText('Dicetak pada: ' + new Date().toLocaleString('id-ID'), { x: 50, y, size: 9, font, color: rgb(0.3, 0.3, 0.3) });
+    y -= 15;
+    page.drawText('Dicetak pada: ' + parseDate(new Date()).toLocaleString('id-ID'), { x: 50, y, size: 9, font, color: rgb(0.3, 0.3, 0.3) });
+
+    // Try to attach KTP if available
+    try {
+      if (v.visitor_ktp_url && v.visitor_ktp_url.startsWith('data:image')) {
+        const base64Data = v.visitor_ktp_url.split(',')[1];
+        if (base64Data) {
+          const ktpBytes = Buffer.from(base64Data, 'base64');
+          let ktpImage;
+          if (v.visitor_ktp_url.includes('image/png')) {
+            ktpImage = await pdfDoc.embedPng(ktpBytes);
+          } else {
+            ktpImage = await pdfDoc.embedJpg(ktpBytes);
+          }
+          
+          if (ktpImage) {
+            y -= 30;
+            page.drawText('Lampiran KTP Utama:', { x: 50, y, size: 10, font: fontBold });
+            y -= 160; // Space for image
+            // Scale image to fit within width 200
+            const imgDims = ktpImage.scale(0.3);
+            page.drawImage(ktpImage, {
+              x: 50,
+              y: y,
+              width: imgDims.width,
+              height: imgDims.height,
+            });
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Failed to embed KTP image in PDF', e);
+    }
 
     const pdfBytes = await pdfDoc.save();
+
+    const safeFilename = (v.visitor_name || 'pengunjung').replace(/\s+/g, '-').replace(/[^a-zA-Z0-9-]/g, '');
 
     return new NextResponse(pdfBytes, {
       status: 200,
       headers: {
         'Content-Type': 'application/pdf',
-        'Content-Disposition': 'inline; filename="Kunjungan-' + v.visitor_name.replace(/\\s+/g, '-') + '.pdf"'
+        'Content-Disposition': `inline; filename="Kunjungan-${safeFilename}.pdf"`
       }
     });
 

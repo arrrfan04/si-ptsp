@@ -3,6 +3,8 @@
 import { updateVisitorStatus, deleteVisitor } from '@/app/actions/visitors';
 import Link from 'next/link';
 import { useNotification } from '@/app/components/NotificationProvider';
+import { parseDate } from '@/lib/dateUtils';
+import ImageViewerModal from '@/app/components/ImageViewerModal';
 
 export default function VisitorList({ visitors }) {
   const { addNotification } = useNotification();
@@ -59,7 +61,7 @@ export default function VisitorList({ visitors }) {
             <tr key={v.id} style={{ backgroundColor: '#F8FAFC', transition: 'all 0.3s' }} className="table-row-hover">
               <td style={{ padding: '1.25rem', borderRadius: '1rem 0 0 1rem' }}>
                 <div style={{ fontSize: '0.8rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-                   <span>🕒</span> {new Date((v.created_at || '').replace(' ', 'T') + 'Z').toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                   <span>🕒</span> {parseDate(v.created_at).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                 </div>
                 <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '1rem' }}>{v.wbp_name}</div>
                 <div style={{ fontSize: '0.8rem', color: '#3BACF7', fontWeight: 600 }}>Kasus: {v.wbp_case}</div>
@@ -72,14 +74,20 @@ export default function VisitorList({ visitors }) {
               <td style={{ padding: '1.25rem' }}>
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '0.4rem' }}>
                   {v.visitor_ktp_url ? (
-                    <a href={v.visitor_ktp_url} target="_blank" rel="noopener noreferrer" style={{ color: '#3BACF7', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                       <span>🪪</span> KTP Utama
-                    </a>
+                    <ImageViewerModal 
+                      imageUrl={v.visitor_ktp_url} 
+                      title="KTP Pengunjung Utama" 
+                      triggerText="KTP Utama" 
+                      triggerIcon="🪪" 
+                    />
                   ) : '-'}
                   {v.follower_ktp_url && (
-                    <a href={v.follower_ktp_url} target="_blank" rel="noopener noreferrer" style={{ color: '#3BACF7', textDecoration: 'none', fontSize: '0.85rem', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
-                       <span>📎</span> KTP Pengikut
-                    </a>
+                    <ImageViewerModal 
+                      imageUrl={v.follower_ktp_url} 
+                      title="KTP Pengikut" 
+                      triggerText="KTP Pengikut" 
+                      triggerIcon="📎" 
+                    />
                   )}
                 </div>
               </td>

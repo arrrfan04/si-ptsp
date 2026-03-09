@@ -1,4 +1,5 @@
 import { getRemissions } from '@/app/actions/remissions';
+import { parseDate } from '@/lib/dateUtils';
 
 export default async function RemisiPage() {
   const res = await getRemissions();
@@ -32,7 +33,7 @@ export default async function RemisiPage() {
                     <td style={{ padding: '1rem' }}>{r.remission_details}</td>
                     <td style={{ padding: '1rem', color: '#10B981', fontWeight: 700 }}>{r.sentence_reduction || '-'}</td>
                     <td style={{ padding: '1rem', color: 'var(--text-muted)', fontSize: '0.9rem' }}>
-                      {new Date((r.created_at || '').replace(' ', 'T') + 'Z').toLocaleDateString('id-ID')}
+                      {parseDate(r.created_at).toLocaleDateString('id-ID')}
                     </td>
                   </tr>
                 ))}

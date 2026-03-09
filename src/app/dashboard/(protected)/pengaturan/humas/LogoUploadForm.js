@@ -39,11 +39,15 @@ export default function LogoUploadForm({ currentLogo }) {
           justifyContent: 'center',
           minWidth: '150px'
         }}>
-          <img 
-            src={currentLogo || '/logo-kemen.png'} 
-            alt="Current Logo" 
-            style={{ height: '80px', width: 'auto', objectFit: 'contain' }} 
-          />
+          {currentLogo ? (
+            <img 
+              src={currentLogo} 
+              alt="Current Logo" 
+              style={{ height: '80px', width: 'auto', objectFit: 'contain' }} 
+            />
+          ) : (
+            <div style={{ color: 'white', fontSize: '0.8rem', textAlign: 'center' }}>Logo Belum Diatur</div>
+          )}
         </div>
 
         <form action={clientAction} style={{ flex: 1, minWidth: '300px' }}>

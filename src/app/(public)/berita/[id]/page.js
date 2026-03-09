@@ -1,6 +1,7 @@
 import { getNewsById } from '@/app/actions/news';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import { parseDate } from '@/lib/dateUtils';
 
 export default async function NewsDetailPage({ params }) {
   const { id } = await params;
@@ -21,7 +22,7 @@ export default async function NewsDetailPage({ params }) {
       <article>
         <header style={{ marginBottom: '3rem' }}>
           <div style={{ color: 'var(--primary-blue)', fontWeight: 700, textTransform: 'uppercase', fontSize: '0.85rem', marginBottom: '1rem', letterSpacing: '1px' }}>
-            {new Date((news.created_at || '').replace(' ', 'T') + 'Z').toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
+            {parseDate(news.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric' })}
           </div>
           <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2, marginBottom: '2rem' }}>
             {news.title}

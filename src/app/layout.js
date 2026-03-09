@@ -8,6 +8,7 @@ import { NotificationProvider } from './components/NotificationProvider';
 export const metadata = {
   title: 'SI PTSP LPP TERNATE',
   description: 'Pelayanan Terpadu Satu Pintu LPP Ternate',
+  viewport: 'width=device-width, initial-scale=1.0',
 }
 
 export default function RootLayout({ children }) {

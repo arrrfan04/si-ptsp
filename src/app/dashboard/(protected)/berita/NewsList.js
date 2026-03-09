@@ -2,6 +2,7 @@
 
 import { deleteNews } from '@/app/actions/news';
 import { useNotification } from '@/app/components/NotificationProvider';
+import { parseDate } from '@/lib/dateUtils';
 
 export default function NewsList({ newsList }) {
   const { addNotification } = useNotification();
@@ -51,7 +52,7 @@ export default function NewsList({ newsList }) {
               </div>
               <div style={{ flex: 1 }}>
                 <div style={{ fontSize: '0.8rem', color: '#3BACF7', fontWeight: 700, marginBottom: '0.4rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                   <span>📅</span> {new Date((news.created_at || '').replace(' ', 'T') + 'Z').toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
+                   <span>📅</span> {parseDate(news.created_at).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })}
                 </div>
                 <h4 style={{ fontSize: '1.2rem', marginBottom: '0.6rem', color: '#0F172A', lineHeight: 1.4 }}>{news.title}</h4>
                 <p style={{ fontSize: '0.9rem', color: '#64748B', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', lineHeight: 1.6 }}>

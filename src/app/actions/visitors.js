@@ -7,14 +7,26 @@ import fs from 'fs';
 import path from 'path';
 
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
+import sharp from 'sharp';
 
 async function saveFile(file) {
   if (!file || file.size === 0) return null;
-  const bytes = await file.arrayBuffer();
-  const buffer = Buffer.from(bytes);
-  const base64 = buffer.toString('base64');
-  const mimeType = file.type || 'image/jpeg';
-  return `data:${mimeType};base64,${base64}`;
+  try {
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
+
+    // Compress using sharp
+    const compressedBuffer = await sharp(buffer)
+      .resize({ width: 800, withoutEnlargement: true })
+      .jpeg({ quality: 80 })
+      .toBuffer();
+
+    const base64 = compressedBuffer.toString('base64');
+    return `data:image/jpeg;base64,${base64}`;
+  } catch (err) {
+    console.error('Error processing image:', err);
+    return null;
+  }
 }
 
 export async function submitVisitorForm(formData) {
@@ -132,6 +144,30 @@ export async function submitVisitorForm(formData) {
     drawText('3. Tunjukkan bukti pendaftaran ini kepada petugas.', 50, currentY, 10, timesRomanFont);
     currentY -= 30;
     drawText(`Dicetak pada: ${new Date().toLocaleString('id-ID')}`, 50, currentY, 10, timesRomanFont);
+
+    // Optional: Embed KTP if possible (similar to route.js)
+    try {
+      if (data.visitor_ktp_url && data.visitor_ktp_url.startsWith('data:image')) {
+        const base64Data = data.visitor_ktp_url.split(',')[1];
+        if (base64Data) {
+          const ktpBytes = Buffer.from(base64Data, 'base64');
+          const ktpImage = await pdfDoc.embedJpg(ktpBytes);
+          if (ktpImage) {
+            const page2 = pdfDoc.addPage([595.28, 841.89]);
+            page2.drawText('Lampiran Foto KTP Utama', { x: 50, y: 800, size: 14, font: timesRomanBoldFont });
+            const dims = ktpImage.scale(0.5);
+            page2.drawImage(ktpImage, {
+              x: 50,
+              y: 780 - dims.height,
+              width: dims.width,
+              height: dims.height,
+            });
+          }
+        }
+      }
+    } catch (e) {
+      console.error('Embed KTP error in action:', e);
+    }
 
     const pdfBytes = await pdfDoc.save();
     const pdfBase64 = Buffer.from(pdfBytes).toString('base64');

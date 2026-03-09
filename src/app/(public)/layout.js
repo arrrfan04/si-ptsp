@@ -8,7 +8,7 @@ import { getSettings } from '@/app/actions/settings';
 export default function PublicLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [logo, setLogo] = useState('/logo-kemen.png');
+  const [logo, setLogo] = useState(null);
   const pathname = usePathname();
 
   useEffect(() => {
@@ -47,11 +47,13 @@ export default function PublicLayout({ children }) {
       }}>
         <div className="container flex justify-between items-center">
           <Link href="/" className="flex items-center" style={{ zIndex: 1001, gap: '1rem' }}>
-            <img 
-              src={logo} 
-              alt="Logo Kementerian" 
-              style={{ height: '48px', width: 'auto', objectFit: 'contain', marginRight: '0.5rem' }} 
-            />
+            {logo && (
+              <img 
+                src={logo} 
+                alt="Logo Kementerian" 
+                style={{ height: '48px', width: 'auto', objectFit: 'contain', marginRight: '0.5rem' }} 
+              />
+            )}
             <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'white', lineHeight: 1.1, fontFamily: 'Outfit' }}>
               SI PTSP<br/>
               <small style={{fontSize:'0.65rem', color: 'rgba(255,255,255,0.6)', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '1px'}}>LPP TERNATE</small>
@@ -146,11 +148,13 @@ export default function PublicLayout({ children }) {
         <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem' }}>
           <div>
             <div className="flex items-center mb-6" style={{ gap: '1rem' }}>
-               <img 
-                src={logo} 
-                alt="Logo Kementerian" 
-                style={{ height: '50px', width: 'auto', objectFit: 'contain', marginRight: '0.5rem' }} 
-               />
+               {logo && (
+                 <img 
+                  src={logo} 
+                  alt="Logo Kementerian" 
+                  style={{ height: '50px', width: 'auto', objectFit: 'contain', marginRight: '0.5rem' }} 
+                 />
+               )}
                <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', fontFamily: 'Outfit' }}>SI PTSP</span>
             </div>
             <p style={{ color: '#94A3B8', lineHeight: 1.8, marginBottom: '1.5rem' }}>Lembaga Pemasyarakatan Perempuan Kelas III Ternate melayani dengan hati, mengedepankan integritas dan transparansi.</p>
