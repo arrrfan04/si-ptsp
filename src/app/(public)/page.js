@@ -156,50 +156,51 @@ export default async function Home() {
 
       <HeroCarousel settings={settings} />
 
-      {/* Services Section */}
-      <section id="layanan" className="container section-padding" style={{ paddingTop: '5rem' }}>
-        <div className="section-header underline">
-          <h2>Layanan Kami</h2>
-          <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '1.5rem auto 0' }}>
-            Akses berbagai layanan publik secara mandiri, transparan, dan terintegrasi dari Lembaga Pemasyarakatan Perempuan Kelas III Ternate.
-          </p>
-        </div>
-        <div className="services-grid animate-up">
-          <Link href="/layanan/kunjungan" className="service-card">
-            <div className="icon-box">👥</div>
-            <h3>Pendaftaran Kunjungan</h3>
-            <p>Daftarkan kunjungan Anda secara online untuk proses yang lebih cepat dan teratur.</p>
-          </Link>
+      <section id="layanan" className="section-padding" style={{ paddingTop: '5rem' }}>
+        <div className="container">
+          <div className="section-header underline">
+            <h2>Layanan Kami</h2>
+            <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '1.5rem auto 0' }}>
+              Akses berbagai layanan publik secara mandiri, transparan, dan terintegrasi dari Lembaga Pemasyarakatan Perempuan Kelas III Ternate.
+            </p>
+          </div>
+          <div className="services-grid animate-up">
+            <Link href="/layanan/kunjungan" className="service-card">
+              <div className="icon-box">👥</div>
+              <h3>Pendaftaran Kunjungan</h3>
+              <p>Daftarkan kunjungan Anda secara online untuk proses yang lebih cepat dan teratur.</p>
+            </Link>
 
-          <Link href="/layanan/integrasi" className="service-card">
-            <div className="icon-box">📄</div>
-            <h3>Layanan Integrasi</h3>
-            <p>Akses informasi dan pengajuan PB, CMB, CB, serta layanan bantuan hukum gratis.</p>
-          </Link>
+            <Link href="/layanan/integrasi" className="service-card">
+              <div className="icon-box">📄</div>
+              <h3>Layanan Integrasi</h3>
+              <p>Akses informasi dan pengajuan PB, CMB, CB, serta layanan bantuan hukum gratis.</p>
+            </Link>
 
-          <Link href="/layanan/pengaduan" className="service-card">
-            <div className="icon-box">⚖️</div>
-            <h3>Kanal Pengaduan</h3>
-            <p>Laporkan segala bentuk penyimpangan melalui kanal resmi yang terintegrasi.</p>
-          </Link>
+            <Link href="/layanan/pengaduan" className="service-card">
+              <div className="icon-box">⚖️</div>
+              <h3>Kanal Pengaduan</h3>
+              <p>Laporkan segala bentuk penyimpangan melalui kanal resmi yang terintegrasi.</p>
+            </Link>
 
-          <Link href="/layanan/pemindahan" className="service-card">
-            <div className="icon-box">🚌</div>
-            <h3>Informasi Pemindahan</h3>
-            <p>Cek status dan ajukan permohonan pemindahan WBP sesuai prosedur yang berlaku.</p>
-          </Link>
+            <Link href="/layanan/pemindahan" className="service-card">
+              <div className="icon-box">🚌</div>
+              <h3>Informasi Pemindahan</h3>
+              <p>Cek status dan ajukan permohonan pemindahan WBP sesuai prosedur yang berlaku.</p>
+            </Link>
 
-          <Link href="/layanan/remisi" className="service-card">
-            <div className="icon-box">🌟</div>
-            <h3>Detail Remisi</h3>
-            <p>Daftar lengkap Warga Binaan Pemasyarakatan yang mendapatkan remisi tahunan.</p>
-          </Link>
+            <Link href="/layanan/remisi" className="service-card">
+              <div className="icon-box">🌟</div>
+              <h3>Detail Remisi</h3>
+              <p>Daftar lengkap Warga Binaan Pemasyarakatan yang mendapatkan remisi tahunan.</p>
+            </Link>
 
-          <Link href="/layanan/esurvey" className="service-card">
-            <div className="icon-box">📊</div>
-            <h3>E-Survey Kepuasan</h3>
-            <p>Bantu kami meningkatkan kualitas pelayanan dengan mengisi survey kepuasan masyarakat.</p>
-          </Link>
+            <Link href="/layanan/esurvey" className="service-card">
+              <div className="icon-box">📊</div>
+              <h3>E-Survey Kepuasan</h3>
+              <p>Bantu kami meningkatkan kualitas pelayanan dengan mengisi survey kepuasan masyarakat.</p>
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -233,7 +234,7 @@ export default async function Home() {
                       <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{news.content}</p>
                       <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                          <span style={{ color: 'var(--primary-blue)', fontWeight: 700, fontSize: '0.9rem' }}>Selengkapnya &rarr;</span>
-                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{new Date(news.created_at).toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{new Date((news.created_at || '').replace(' ', 'T') + 'Z').toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
                       </div>
                     </div>
                   </Link>

@@ -59,7 +59,7 @@ export default function VisitorList({ visitors }) {
             <tr key={v.id} style={{ backgroundColor: '#F8FAFC', transition: 'all 0.3s' }} className="table-row-hover">
               <td style={{ padding: '1.25rem', borderRadius: '1rem 0 0 1rem' }}>
                 <div style={{ fontSize: '0.8rem', color: '#64748B', display: 'flex', alignItems: 'center', gap: '0.4rem', marginBottom: '0.5rem' }}>
-                   <span>🕒</span> {new Date(v.created_at).toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                   <span>🕒</span> {new Date((v.created_at || '').replace(' ', 'T') + 'Z').toLocaleString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
                 </div>
                 <div style={{ fontWeight: 800, color: '#0F172A', fontSize: '1rem' }}>{v.wbp_name}</div>
                 <div style={{ fontSize: '0.8rem', color: '#3BACF7', fontWeight: 600 }}>Kasus: {v.wbp_case}</div>

@@ -36,10 +36,29 @@ export default function DashboardLayoutClient({ children, session }) {
 
   const filteredMenu = menuItems.filter(item => item.roles.includes(role));
 
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+  }, [pathname]);
+
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F8FAFC', fontFamily: 'Inter, sans-serif' }}>
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div 
+          onClick={() => setIsMobileMenuOpen(false)}
+          style={{
+            position: 'fixed', top: 0, left: 0, right: 0, bottom: 0,
+            backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 95
+          }}
+          className="mobile-overlay"
+        />
+      )}
+
       {/* Sidebar */}
-      <aside style={{ 
+      <aside className={`dashboard-sidebar ${isMobileMenuOpen ? 'open' : ''}`} style={{ 
         width: '280px', 
         backgroundColor: '#0F172A', 
         display: 'flex', 
@@ -47,7 +66,8 @@ export default function DashboardLayoutClient({ children, session }) {
         boxShadow: '4px 0 20px rgba(0,0,0,0.1)',
         zIndex: 100,
         position: 'fixed',
-        height: '100vh'
+        height: '100vh',
+        transition: 'transform 0.3s ease-in-out'
       }}>
         {/* Sidebar Header/Logo */}
         <div style={{ 
@@ -57,8 +77,18 @@ export default function DashboardLayoutClient({ children, session }) {
           display: 'flex', 
           flexDirection: 'column', 
           alignItems: 'center', 
-          gap: '1.25rem' 
+          gap: '1.25rem',
+          position: 'relative'
         }}>
+          <button 
+            className="mobile-close-btn"
+            onClick={() => setIsMobileMenuOpen(false)}
+            style={{
+              position: 'absolute', top: '10px', right: '15px',
+              background: 'none', border: 'none', color: 'white', fontSize: '1.5rem', cursor: 'pointer',
+              display: 'none'
+            }}
+          >✕</button>
           <div style={{ backgroundColor: 'white', padding: '10px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <img 
               src={logo} 
@@ -135,9 +165,9 @@ export default function DashboardLayoutClient({ children, session }) {
       </aside>
 
       {/* Main Content Area */}
-      <div style={{ flex: 1, marginLeft: '280px', display: 'flex', flexDirection: 'column' }}>
+      <div className="dashboard-main-content" style={{ flex: 1, marginLeft: '280px', display: 'flex', flexDirection: 'column', minWidth: 0, transition: 'all 0.3s' }}>
         {/* Main Content Header */}
-        <header style={{ 
+        <header className="dashboard-header" style={{ 
           height: '100px',
           backgroundColor: 'white', 
           display: 'flex', 
@@ -149,7 +179,14 @@ export default function DashboardLayoutClient({ children, session }) {
           top: 0,
           zIndex: 90
         }}>
-           <div style={{ flex: 1 }}>
+           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flex: 1 }}>
+             <button 
+               className="mobile-menu-toggle"
+               onClick={() => setIsMobileMenuOpen(true)}
+               style={{
+                 display: 'none', background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', color: '#0F172A'
+               }}
+             >☰</button>
              <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0F172A', fontFamily: 'Outfit, sans-serif' }}>
                 Selamat Datang, <span style={{ color: '#3BACF7' }}>{username}</span>
              </h1>
@@ -168,7 +205,7 @@ export default function DashboardLayoutClient({ children, session }) {
                gap: '0.5rem',
                transition: 'all 0.3s',
                textDecoration: 'none'
-             }} className="dashboard-header-btn">
+             }} className="dashboard-header-btn hide-on-mobile">
                <span>&#8599;</span> Lihat Website
              </Link>
              
@@ -179,16 +216,46 @@ export default function DashboardLayoutClient({ children, session }) {
                display: 'flex', alignItems: 'center', justifyContent: 'center',
                fontSize: '1.2rem',
                border: '2px solid white',
-               boxShadow: '0 4px 10px rgba(0,0,0,0.05)'
+               boxShadow: '0 4px 10px rgba(0,0,0,0.05)',
+               flexShrink: 0
              }}>👤</div>
            </div>
         </header>
 
         {/* Main Viewport */}
-        <main style={{ padding: '3rem', flex: 1 }}>
+        <main className="dashboard-viewport" style={{ padding: '3rem', flex: 1, overflowX: 'auto' }}>
           {children}
         </main>
       </div>
+
+      <style jsx global>{`
+        @media (max-width: 1024px) {
+          .dashboard-sidebar {
+            transform: translateX(-100%);
+          }
+          .dashboard-sidebar.open {
+            transform: translateX(0);
+          }
+          .dashboard-main-content {
+            marginLeft: 0 !important;
+          }
+          .dashboard-header {
+            padding: 0 1.5rem !important;
+          }
+          .dashboard-viewport {
+            padding: 1.5rem !important;
+          }
+          .mobile-menu-toggle {
+            display: block !important;
+          }
+          .mobile-close-btn {
+            display: block !important;
+          }
+          .hide-on-mobile {
+            display: none !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

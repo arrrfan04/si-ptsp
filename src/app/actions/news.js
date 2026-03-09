@@ -3,20 +3,14 @@
 import { getDb } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { revalidatePath } from 'next/cache';
-import fs from 'fs';
-import path from 'path';
 
-async function saveFile(file, prefix) {
+async function saveFile(file) {
   if (!file || file.size === 0) return null;
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  
-  const ext = file.name.split('.').pop();
-  const filename = `${prefix}-${Date.now()}.${ext}`;
-  const filepath = path.join(process.cwd(), 'public/uploads', filename);
-  
-  fs.writeFileSync(filepath, buffer);
-  return `/uploads/${filename}`;
+  const base64 = buffer.toString('base64');
+  const mimeType = file.type || 'image/jpeg';
+  return `data:${mimeType};base64,${base64}`;
 }
 
 export async function getNews() {
@@ -42,7 +36,7 @@ export async function createNews(formData) {
     
     let imageUrl = '';
     if (imageFile) {
-      imageUrl = await saveFile(imageFile, 'news');
+      imageUrl = await saveFile(imageFile);
     }
 
     await db.execute({

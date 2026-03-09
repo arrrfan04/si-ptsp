@@ -22,6 +22,7 @@ export async function GET(request, { params }) {
     if (!v) {
       return new NextResponse('Not Found', { status: 404 });
     }
+    v.status = v.status || 'pending';
 
     // Generate PDF
     const pdfDoc = await PDFDocument.create();

@@ -59,8 +59,8 @@ export async function submitVisitorForm(formData) {
         wbp_name, wbp_case, visitor_name, visitor_nik, visitor_purpose, 
         visitor_email, visitor_address, visitor_date, visitor_wa, visitor_ktp_url,
         follower_name, follower_nik, follower_purpose, follower_email, 
-        follower_address, follower_date, follower_wa, follower_ktp_url
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+        follower_address, follower_date, follower_wa, follower_ktp_url, status
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')`,
       args
     });
 
@@ -152,7 +152,10 @@ export async function getVisitors() {
   try {
     const db = getDb();
     const result = await db.execute('SELECT * FROM visitors ORDER BY created_at DESC');
-    const plainVisitors = JSON.parse(JSON.stringify(result.rows));
+    const plainVisitors = JSON.parse(JSON.stringify(result.rows)).map(v => ({
+      ...v,
+      status: v.status || 'pending'
+    }));
     return { success: true, visitors: plainVisitors };
   } catch (error) {
     return { success: false, message: 'Error fetching visitors' };

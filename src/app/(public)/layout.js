@@ -87,34 +87,49 @@ export default function PublicLayout({ children }) {
             {isMenuOpen ? '✕' : '☰'}
           </button>
         </div>
-
-        {/* Mobile Navigation Menu */}
-        <div style={{
-          position: 'fixed',
-          top: 0,
-          right: 0,
-          width: '100%',
-          height: '100vh',
-          backgroundColor: '#0F172A',
-          display: isMenuOpen ? 'flex' : 'none',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: '2rem',
-          zIndex: 1000,
-          transition: 'var(--transition)'
-        }}>
-          <Link href="/" className="nav-link" style={{ color: 'white', fontSize: '1.5rem' }}>Beranda</Link>
-          <Link href="/#layanan" className="nav-link" style={{ color: 'white', fontSize: '1.5rem' }}>Layanan</Link>
-          <Link href="/#berita" className="nav-link" style={{ color: 'white', fontSize: '1.5rem' }}>Berita</Link>
-          <Link href="/dashboard" className="btn" style={{ 
-            padding: '1rem 2.5rem', 
-            backgroundColor: 'var(--primary-blue)', 
-            color: 'white',
-            fontSize: '1.2rem'
-          }}>Login Portal</Link>
-        </div>
       </header>
+
+      {/* Mobile Navigation Menu */}
+      <div style={{
+        position: 'fixed',
+        top: 0,
+        right: 0,
+        width: '100%',
+        height: '100vh',
+        backgroundColor: '#0F172A',
+        display: isMenuOpen ? 'flex' : 'none',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '2rem',
+        zIndex: 1000,
+        transition: 'var(--transition)'
+      }}>
+        <button 
+          onClick={() => setIsMenuOpen(false)}
+          style={{
+            position: 'absolute',
+            top: '2rem',
+            right: '2rem',
+            background: 'none',
+            border: 'none',
+            color: 'white',
+            fontSize: '2rem',
+            cursor: 'pointer'
+          }}
+        >
+          ✕
+        </button>
+        <Link href="/" className="nav-link" style={{ color: 'white', fontSize: '1.5rem' }}>Beranda</Link>
+        <Link href="/#layanan" className="nav-link" style={{ color: 'white', fontSize: '1.5rem' }}>Layanan</Link>
+        <Link href="/#berita" className="nav-link" style={{ color: 'white', fontSize: '1.5rem' }}>Berita</Link>
+        <Link href="/dashboard" className="btn" style={{ 
+          padding: '1rem 2.5rem', 
+          backgroundColor: 'var(--primary-blue)', 
+          color: 'white',
+          fontSize: '1.2rem'
+        }}>Login Portal</Link>
+      </div>
 
       <style jsx global>{`
         @media (max-width: 1024px) {
@@ -144,8 +159,8 @@ export default function PublicLayout({ children }) {
           <div>
             <h3 style={{ marginBottom: '1.5rem', color: 'white', fontSize: '1.2rem' }}>Hubungi Kami</h3>
             <ul style={{ listStyle: 'none', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-              <li>📍 Jl. Raya Bastiong, Ternate</li>
-              <li>📧 lpp.ternate@kemenkumham.go.id</li>
+              <li>📍 Jl. Raya Kastela, Ternate</li>
+              <li>📧 lpp.ternate@kemenimpas.go.id</li>
               <li>📞 (0921) 312-XXXX</li>
               <li>📱 0812-XXXX-XXXX (WhatsApp)</li>
             </ul>
