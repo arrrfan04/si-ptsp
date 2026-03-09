@@ -44,7 +44,11 @@ export default function KunjunganPage() {
   if (success) {
     return (
       <div className="container py-4">
-        <div className="form-card text-center" style={{ maxWidth: '600px', margin: '2rem auto', padding: '4rem 2rem' }}>
+        <div className="form-card text-center" style={{ 
+          maxWidth: '600px', 
+          margin: '2rem auto', 
+          padding: '2.5rem 1.5rem' 
+        }}>
           <div style={{ fontSize: '5rem', marginBottom: '1.5rem', color: '#10B981', animation: 'bounce 1s ease' }}>✅</div>
           <h2 style={{ fontSize: '2rem', fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#0F172A', marginBottom: '1rem' }}>Pendaftaran Berhasil!</h2>
           <p style={{ color: '#64748B', marginBottom: '2.5rem', fontSize: '1.1rem', lineHeight: 1.6 }}>Data kunjungan Anda telah terkirim dan tercatat dalam sistem pendaftaran LPP Ternate. Silakan unduh bukti pendaftaran di bawah ini.</p>
@@ -79,7 +83,17 @@ export default function KunjunganPage() {
 
   return (
     <div className="container py-4">
-      <div className="form-card animate-up" style={{ maxWidth: '850px', margin: '0 auto', padding: '3.5rem' }}>
+      <div className="form-card animate-up" id="kunjungan-form-card" style={{ maxWidth: '850px', margin: '0 auto' }}>
+        <style jsx>{`
+          #kunjungan-form-card {
+            padding: 3.5rem;
+          }
+          @media (max-width: 768px) {
+            #kunjungan-form-card {
+              padding: 1.5rem !important;
+            }
+          }
+        `}</style>
         {error && (
           <div style={{ padding: '1.25rem', backgroundColor: '#FEF2F2', border: '1px solid #FCA5A5', color: '#DC2626', borderRadius: '0.75rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 600 }}>
              <span>⚠️</span> {error}
@@ -95,7 +109,11 @@ export default function KunjunganPage() {
               <h3 style={{ fontSize: '1.2rem', fontFamily: 'Outfit', fontWeight: 800, color: '#0F172A', margin: 0 }}>Data Pengunjung Utama</h3>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium">
                 <label className="form-label-premium">Nama Lengkap Sesuai KTP <span style={{color: '#EF4444'}}>*</span></label>
                 <input type="text" name="visitor_name" className="form-input-premium" placeholder="Contoh: Budi Santoso" required />
@@ -111,7 +129,11 @@ export default function KunjunganPage() {
               <input type="text" name="visitor_purpose" className="form-input-premium" placeholder="Contoh: Membesuk keluarga" required />
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium">
                 <label className="form-label-premium">Alamat Email (Opsional)</label>
                 <input type="email" name="visitor_email" className="form-input-premium" placeholder="nama@email.com" />
@@ -122,7 +144,11 @@ export default function KunjunganPage() {
               </div>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium">
                 <label className="form-label-premium">Pilih Tanggal Kunjungan <span style={{color: '#EF4444'}}>*</span></label>
                 <input type="date" name="visitor_date" className="form-input-premium" required />
@@ -149,7 +175,11 @@ export default function KunjunganPage() {
             </div>
             <p style={{ fontSize: '0.9rem', color: '#64748B', marginBottom: '1.5rem' }}>Silakan isi bagian ini apabila Anda membawa anggota keluarga atau rekan saat berkunjung.</p>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium">
                 <label className="form-label-premium">Nama Pengikut</label>
                 <input type="text" name="follower_name" className="form-input-premium" placeholder="Nama lengkap pengikut" />
@@ -160,7 +190,11 @@ export default function KunjunganPage() {
               </div>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium">
                 <label className="form-label-premium">Email Pengikut</label>
                 <input type="email" name="follower_email" className="form-input-premium" placeholder="nama@email.com" />
@@ -171,7 +205,11 @@ export default function KunjunganPage() {
               </div>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium">
                 <label className="form-label-premium">Foto / Scan KTP Pengikut</label>
                 <div style={{ border: '2px dashed #E2E8F0', padding: '0.5rem', borderRadius: '0.75rem', backgroundColor: '#F8FAFC' }}>
@@ -193,7 +231,11 @@ export default function KunjunganPage() {
               <h3 style={{ fontSize: '1.2rem', fontFamily: 'Outfit', fontWeight: 800, color: '#0F172A', margin: 0 }}>Informasi Warga Binaan (WBP)</h3>
             </div>
             
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: 'repeat(auto-fit, minmax(100%, 1fr))', 
+              gap: '1.25rem' 
+            }} className="md-grid-2">
               <div className="form-group-premium" style={{ marginBottom: 0 }}>
                 <label className="form-label-premium">Nama Lengkap WBP <span style={{color: '#EF4444'}}>*</span></label>
                 <input type="text" name="wbp_name" className="form-input-premium" placeholder="Nama lengkap warga binaan yang dituju" required />
@@ -225,6 +267,13 @@ export default function KunjunganPage() {
           </div>
         </form>
       </div>
+      <style jsx>{`
+        @media (min-width: 768px) {
+          .md-grid-2 {
+            grid-template-columns: repeat(2, 1fr) !important;
+          }
+        }
+      `}</style>
     </div>
   );
 }

@@ -92,37 +92,7 @@ export async function GET(request, { params }) {
     y -= 15;
     page.drawText('Dicetak pada: ' + parseDate(new Date()).toLocaleString('id-ID'), { x: 50, y, size: 9, font, color: rgb(0.3, 0.3, 0.3) });
 
-    // Try to attach KTP if available
-    try {
-      if (v.visitor_ktp_url && v.visitor_ktp_url.startsWith('data:image')) {
-        const base64Data = v.visitor_ktp_url.split(',')[1];
-        if (base64Data) {
-          const ktpBytes = Buffer.from(base64Data, 'base64');
-          let ktpImage;
-          if (v.visitor_ktp_url.includes('image/png')) {
-            ktpImage = await pdfDoc.embedPng(ktpBytes);
-          } else {
-            ktpImage = await pdfDoc.embedJpg(ktpBytes);
-          }
-          
-          if (ktpImage) {
-            y -= 30;
-            page.drawText('Lampiran KTP Utama:', { x: 50, y, size: 10, font: fontBold });
-            y -= 160; // Space for image
-            // Scale image to fit within width 200
-            const imgDims = ktpImage.scale(0.3);
-            page.drawImage(ktpImage, {
-              x: 50,
-              y: y,
-              width: imgDims.width,
-              height: imgDims.height,
-            });
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Failed to embed KTP image in PDF', e);
-    }
+
 
     const pdfBytes = await pdfDoc.save();
 

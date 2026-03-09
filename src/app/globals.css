@@ -136,13 +136,38 @@ a {
 }
 
 /* Premium Form Utilities */
-.form-card {
+}
+
+.card, .form-card {
   background-color: white;
   padding: 2.5rem;
   border-radius: 1.5rem;
   box-shadow: 0 10px 30px rgba(0,0,0,0.03);
   border: 1px solid #E2E8F0;
   transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .card, .form-card {
+    padding: 1.5rem !important;
+    border-radius: 1rem;
+  }
+}
+
+.card-premium {
+  background-color: white;
+  padding: 3rem;
+  border-radius: 1.5rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+  border: 1px solid #E2E8F0;
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .card-premium {
+    padding: 1.5rem !important;
+    border-radius: 1rem;
+  }
 }
 
 .form-label-premium {

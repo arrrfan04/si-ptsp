@@ -145,29 +145,7 @@ export async function submitVisitorForm(formData) {
     currentY -= 30;
     drawText(`Dicetak pada: ${new Date().toLocaleString('id-ID')}`, 50, currentY, 10, timesRomanFont);
 
-    // Optional: Embed KTP if possible (similar to route.js)
-    try {
-      if (data.visitor_ktp_url && data.visitor_ktp_url.startsWith('data:image')) {
-        const base64Data = data.visitor_ktp_url.split(',')[1];
-        if (base64Data) {
-          const ktpBytes = Buffer.from(base64Data, 'base64');
-          const ktpImage = await pdfDoc.embedJpg(ktpBytes);
-          if (ktpImage) {
-            const page2 = pdfDoc.addPage([595.28, 841.89]);
-            page2.drawText('Lampiran Foto KTP Utama', { x: 50, y: 800, size: 14, font: timesRomanBoldFont });
-            const dims = ktpImage.scale(0.5);
-            page2.drawImage(ktpImage, {
-              x: 50,
-              y: 780 - dims.height,
-              width: dims.width,
-              height: dims.height,
-            });
-          }
-        }
-      }
-    } catch (e) {
-      console.error('Embed KTP error in action:', e);
-    }
+
 
     const pdfBytes = await pdfDoc.save();
     const pdfBase64 = Buffer.from(pdfBytes).toString('base64');

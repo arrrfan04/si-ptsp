@@ -7,19 +7,8 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
-export default function DashboardLayoutClient({ children, session }) {
+export default function DashboardLayoutClient({ children, session, logo }) {
   const pathname = usePathname();
-  const [logo, setLogo] = useState(null);
-
-  useEffect(() => {
-    const fetchLogo = async () => {
-      const res = await getSettings();
-      if (res.success && res.settings.app_logo) {
-        setLogo(res.settings.app_logo);
-      }
-    };
-    fetchLogo();
-  }, []);
   
   const role = session?.user?.role || 'admin';
   const username = session?.user?.username || 'User';
@@ -239,10 +228,11 @@ export default function DashboardLayoutClient({ children, session }) {
             transform: translateX(0);
           }
           .dashboard-main-content {
-            marginLeft: 0 !important;
+            margin-left: 0 !important;
           }
           .dashboard-header {
             padding: 0 1.5rem !important;
+            height: 70px !important;
           }
           .dashboard-viewport {
             padding: 1.5rem !important;

@@ -238,7 +238,7 @@ export default async function Home() {
                       <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{news.content}</p>
                       <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                          <span style={{ color: 'var(--primary-blue)', fontWeight: 700, fontSize: '0.9rem' }}>Selengkapnya &rarr;</span>
-                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{parseDate(news.created_at).toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric' })}</time>
+                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{parseDate(news.created_at).toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'Asia/Jayapura' })}</time>
                       </div>
                     </div>
                   </Link>

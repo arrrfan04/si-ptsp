@@ -5,8 +5,8 @@ export default async function ESurveyPage() {
   const settings = res.success ? res.settings : {};
 
   return (
-    <div className="container">
-      <div className="card" style={{ maxWidth: '800px', margin: '0 auto', padding: '3rem 2rem', textAlign: 'center' }}>
+    <div className="container py-4">
+      <div className="card-premium animate-up" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         
         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', maxWidth: '400px', margin: '0 auto' }}>
           <a href={settings.link_esurvey_1 || '#'} target="_blank" className="btn btn-primary" style={{ padding: '1rem' }}>Isi E-Survey 1</a>

@@ -76,7 +76,7 @@ export async function getNewsById(id) {
     const db = getDb();
     const result = await db.execute({
       sql: 'SELECT * FROM news WHERE id = ?',
-      args: [id]
+      args: [Number(id)]
     });
     
     if (result.rows.length === 0) {

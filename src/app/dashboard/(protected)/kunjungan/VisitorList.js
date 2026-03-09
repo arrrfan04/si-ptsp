@@ -53,7 +53,8 @@ export default function VisitorList({ visitors }) {
             <th style={{ padding: '0.75rem 1.25rem', color: '#94A3B8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>Pengunjung Utama</th>
             <th style={{ padding: '0.75rem 1.25rem', color: '#94A3B8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>Dokumen</th>
             <th style={{ padding: '0.75rem 1.25rem', color: '#94A3B8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700 }}>Status</th>
-            <th style={{ padding: '0.75rem 1.25rem', color: '#94A3B8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700, textAlign: 'center' }}>Aksi Kelola</th>
+            <th style={{ padding: '0.75rem 1.25rem', color: '#94A3B8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700, textAlign: 'center' }}>Persetujuan</th>
+            <th style={{ padding: '0.75rem 1.25rem', color: '#94A3B8', fontSize: '0.8rem', textTransform: 'uppercase', letterSpacing: '1px', fontWeight: 700, textAlign: 'center' }}>Aksi Lainnya</th>
           </tr>
         </thead>
         <tbody>
@@ -106,26 +107,32 @@ export default function VisitorList({ visitors }) {
                   {v.status}
                 </span>
               </td>
-              <td style={{ padding: '1.25rem', borderRadius: '0 1rem 1rem 0', textAlign: 'center' }}>
-                <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center', flexWrap: 'wrap' }}>
-                  {v.status === 'pending' && (
+              <td style={{ padding: '1.25rem', textAlign: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center' }}>
+                  {v.status === 'pending' ? (
                     <>
                       <button 
                         type="button" 
                         onClick={() => handleUpdateStatus(v.id, 'approved', v.visitor_name)} 
-                        style={{ background: '#10B981', color: 'white', padding: '0.5rem 1rem', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.3s' }}
+                        style={{ background: '#10B981', color: 'white', padding: '0.5rem 1rem', border: 'none', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.3s', fontSize: '0.85rem' }}
                       >Setuju</button>
                       
                       <button 
                         type="button" 
                         onClick={() => handleUpdateStatus(v.id, 'rejected', v.visitor_name)} 
-                        style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#EF4444', padding: '0.5rem 1rem', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.3s' }}
+                        style={{ background: 'rgba(239, 68, 68, 0.1)', color: '#EF4444', padding: '0.5rem 1rem', border: '1px solid rgba(239, 68, 68, 0.2)', borderRadius: '8px', fontWeight: 700, cursor: 'pointer', transition: 'all 0.3s', fontSize: '0.85rem' }}
                       >Tolak</button>
                     </>
+                  ) : (
+                    <span style={{ fontSize: '0.85rem', color: '#94A3B8', fontStyle: 'italic' }}>Telah diproses</span>
                   )}
-                  {v.status === 'approved' && (
+                </div>
+              </td>
+              <td style={{ padding: '1.25rem', borderRadius: '0 1rem 1rem 0', textAlign: 'center' }}>
+                <div style={{ display: 'flex', gap: '0.6rem', justifyContent: 'center' }}>
+                  {v.status !== 'pending' && (
                     <Link href={"/dashboard/kunjungan/cetak/" + v.id} target="_blank" style={{ 
-                      padding: '0.5rem 1.25rem', 
+                      padding: '0.5rem 0.75rem', 
                       backgroundColor: '#0F172A', 
                       color: 'white', 
                       borderRadius: '8px', 
@@ -133,15 +140,15 @@ export default function VisitorList({ visitors }) {
                       textDecoration: 'none',
                       fontSize: '0.85rem',
                       display: 'flex',
-                      alignItems: 'center'
-                    }}>🖨️ Cetak PDF</Link>
+                      alignItems: 'center',
+                      gap: '0.3rem'
+                    }}><span>🖨️</span> Cetak PDF</Link>
                   )}
-                  
                   <button 
                     type="button" 
                     onClick={() => handleDelete(v.id, v.visitor_name)} 
                     style={{ 
-                      padding: '0.5rem 1rem', 
+                      padding: '0.5rem 0.75rem', 
                       backgroundColor: 'rgba(239, 68, 68, 0.05)', 
                       color: '#EF4444', 
                       border: '1px solid rgba(239, 68, 68, 0.1)',

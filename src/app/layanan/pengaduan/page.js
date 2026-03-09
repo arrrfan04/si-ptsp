@@ -5,10 +5,10 @@ export default async function PengaduanPage() {
   const settings = res.success ? res.settings : {};
 
   return (
-    <div className="container">
-      <div className="card" style={{ maxWidth: '800px', margin: '0 auto', padding: '2.5rem', textAlign: 'center' }}>
+    <div className="container py-4">
+      <div className="card-premium animate-up" style={{ maxWidth: '800px', margin: '0 auto', textAlign: 'center' }}>
         
-        <div style={{ display: 'grid', gap: '1.5rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
+        <div style={{ display: 'grid', gap: '1.25rem', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))' }}>
           <a href={settings.link_pengaduan_gratifikasi || '#'} target="_blank" className="card" style={{ padding: '2rem 1rem', display: 'block' }}>
              <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🛑</div>
              <h3 style={{ marginBottom: '0.5rem' }}>Gratifikasi</h3>

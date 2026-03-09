@@ -6,16 +6,30 @@ export default async function RemisiPage() {
   const remissions = res.success ? res.remissions : [];
 
   return (
-    <div className="container">
-      <div className="card" style={{ padding: '2.5rem', margin: '0 auto', maxWidth: '1000px' }}>
+    <div className="container py-4">
+      <div className="card remission-card" style={{ margin: '0 auto', maxWidth: '1000px' }}>
+        <style jsx>{`
+          .remission-card {
+            padding: 2.5rem;
+          }
+          @media (max-width: 768px) {
+            .remission-card {
+              padding: 1rem !important;
+            }
+            .remission-table th, .remission-table td {
+              padding: 0.75rem 0.5rem !important;
+              font-size: 0.8rem;
+            }
+          }
+        `}</style>
         
         {remissions.length === 0 ? (
           <div className="text-center" style={{ padding: '3rem', color: 'var(--text-muted)', background: 'var(--gray-light)', borderRadius: 'var(--radius-md)' }}>
             Belum ada data remisi yang dipublikasikan.
           </div>
         ) : (
-          <div style={{ overflowX: 'auto' }}>
-            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+          <div style={{ overflowX: 'auto', WebkitOverflowScrolling: 'touch' }}>
+            <table className="remission-table" style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', minWidth: '600px' }}>
               <thead>
                 <tr style={{ background: 'var(--primary-blue-light)', color: 'var(--primary-blue)' }}>
                   <th style={{ padding: '1rem', borderBottom: '2px solid var(--primary-blue)' }}>Nama WBP</th>
