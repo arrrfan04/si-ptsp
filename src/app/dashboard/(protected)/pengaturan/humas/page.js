@@ -1,6 +1,7 @@
 import { getSettings } from '@/app/actions/settings';
 import MarqueeForm from './MarqueeForm';
 import HeroUploadForm from './HeroUploadForm';
+import LogoUploadForm from './LogoUploadForm';
 
 export default async function HumasSettingsDashboard() {
   const res = await getSettings();
@@ -10,11 +11,16 @@ export default async function HumasSettingsDashboard() {
     <div className="animate-up">
       <div style={{ marginBottom: '3rem' }}>
         <h2 style={{ fontSize: '2rem', fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#0F172A' }}>Pengaturan Publikasi & Kehumasan</h2>
-        <p style={{ color: '#64748B', fontSize: '1rem', marginTop: '0.5rem' }}>Kelola teks berjalan (Marquee) dan gambar slide halaman utama.</p>
+        <p style={{ color: '#64748B', fontSize: '1rem', marginTop: '0.5rem' }}>Kelola logo instansi, teks berjalan (Marquee) dan gambar slide halaman utama.</p>
       </div>
       
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(450px, 1fr))', gap: '2.5rem' }}>
         
+        {/* Logo settings - Full Width */}
+        <div style={{ gridColumn: '1 / -1' }}>
+          <LogoUploadForm currentLogo={settings.app_logo} />
+        </div>
+
         {/* Banner/Marquee Card */}
         <MarqueeForm initialValue={settings.marquee_text} />
 

@@ -51,7 +51,7 @@ export async function GET(request, { params }) {
     const printLine = (label, value) => {
       page.drawText(label, { x: 50, y, size: 11, font: fontBold });
       page.drawText(':', { x: 170, y, size: 11, font: fontBold });
-      page.drawText(value || '-', { x: 185, y, size: 11, font });
+      page.drawText(String(value || '-'), { x: 185, y, size: 11, font });
       y -= lineHeight;
     };
 
@@ -71,14 +71,15 @@ export async function GET(request, { params }) {
     printLine('No. Telepon / WA', v.visitor_wa);
     printLine('Alamat Lengkap', v.visitor_address);
 
-    if (v.follower_name) {
+    if (v.follower_name && v.follower_name !== '-') {
       y -= 15;
       page.drawText('C. DATA PENGIKUT', { x: 50, y, size: 12, font: fontBold });
       y -= 25;
-      printLine('Nama Pengikut', v.follower_name);
+      printLine('Nama Lengkap', v.follower_name);
       printLine('NIK Pengikut', v.follower_nik);
-      printLine('Tanggal Kunjungan', v.follower_date);
+      printLine('Email', v.follower_email);
       printLine('No. Telepon / WA', v.follower_wa);
+      printLine('Alamat Lengkap', v.follower_address);
     }
 
     y -= 40;

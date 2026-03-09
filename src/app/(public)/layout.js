@@ -3,13 +3,23 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { getSettings } from '@/app/actions/settings';
 
 export default function PublicLayout({ children }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [logo, setLogo] = useState('/logo-kemen.png');
   const pathname = usePathname();
 
   useEffect(() => {
+    const fetchLogo = async () => {
+      const res = await getSettings();
+      if (res.success && res.settings.app_logo) {
+        setLogo(res.settings.app_logo);
+      }
+    };
+    fetchLogo();
+    
     const handleScroll = () => {
       setScrolled(window.scrollY > 20);
     };
@@ -36,11 +46,11 @@ export default function PublicLayout({ children }) {
         borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
       }}>
         <div className="container flex justify-between items-center">
-          <Link href="/" className="flex items-center gap-3" style={{ zIndex: 1001 }}>
+          <Link href="/" className="flex items-center" style={{ zIndex: 1001, gap: '1rem' }}>
             <img 
-              src="/logo-kemen.png" 
+              src={logo} 
               alt="Logo Kementerian" 
-              style={{ height: '48px', width: 'auto', objectFit: 'contain' }} 
+              style={{ height: '48px', width: 'auto', objectFit: 'contain', marginRight: '0.5rem' }} 
             />
             <span style={{ fontSize: '1.25rem', fontWeight: 800, color: 'white', lineHeight: 1.1, fontFamily: 'Outfit' }}>
               SI PTSP<br/>
@@ -120,11 +130,11 @@ export default function PublicLayout({ children }) {
       <footer style={{ backgroundColor: '#0F172A', color: 'white', padding: '5rem 0 2rem 0', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
         <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem' }}>
           <div>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center mb-6" style={{ gap: '1rem' }}>
                <img 
-                src="/logo-kemen.png" 
+                src={logo} 
                 alt="Logo Kementerian" 
-                style={{ height: '50px', width: 'auto', objectFit: 'contain' }} 
+                style={{ height: '50px', width: 'auto', objectFit: 'contain', marginRight: '0.5rem' }} 
                />
                <span style={{ fontSize: '1.5rem', fontWeight: 800, color: 'white', fontFamily: 'Outfit' }}>SI PTSP</span>
             </div>

@@ -1,12 +1,25 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import { logOutAction } from '@/app/actions/auth';
+import { getSettings } from '@/app/actions/settings';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 export default function DashboardLayoutClient({ children, session }) {
   const pathname = usePathname();
+  const [logo, setLogo] = useState('/logo-kemen.png');
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      const res = await getSettings();
+      if (res.success && res.settings.app_logo) {
+        setLogo(res.settings.app_logo);
+      }
+    };
+    fetchLogo();
+  }, []);
   
   const role = session?.user?.role || 'admin';
   const username = session?.user?.username || 'User';
@@ -47,12 +60,10 @@ export default function DashboardLayoutClient({ children, session }) {
           gap: '1.25rem' 
         }}>
           <div style={{ backgroundColor: 'white', padding: '10px', borderRadius: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <Image 
-              src="/logo-kemen.png" 
+            <img 
+              src={logo} 
               alt="Logo Kemen" 
-              width={65} 
-              height={65} 
-              style={{ objectFit: 'contain' }} 
+              style={{ width: '65px', height: '65px', objectFit: 'contain' }} 
             />
           </div>
           <div>

@@ -8,26 +8,22 @@ import path from 'path';
 
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 
-async function saveFile(file, prefix) {
+async function saveFile(file) {
   if (!file || file.size === 0) return null;
   const bytes = await file.arrayBuffer();
   const buffer = Buffer.from(bytes);
-  
-  const ext = file.name.split('.').pop();
-  const filename = `${prefix}-${Date.now()}.${ext}`;
-  const filepath = path.join(process.cwd(), 'public/uploads', filename);
-  
-  fs.writeFileSync(filepath, buffer);
-  return `/uploads/${filename}`;
+  const base64 = buffer.toString('base64');
+  const mimeType = file.type || 'image/jpeg';
+  return `data:${mimeType};base64,${base64}`;
 }
 
 export async function submitVisitorForm(formData) {
   try {
     const db = getDb();
     
-    // Save images
-    const visitorKtpUrl = await saveFile(formData.get('visitor_ktp'), 'ktp-visitor');
-    const followerKtpUrl = await saveFile(formData.get('follower_ktp'), 'ktp-follower');
+    // Convert to Base64
+    const visitorKtpUrl = await saveFile(formData.get('visitor_ktp'));
+    const followerKtpUrl = await saveFile(formData.get('follower_ktp'));
 
     const data = {
       wbp_name: formData.get('wbp_name') || '-',
@@ -113,7 +109,10 @@ export async function submitVisitorForm(formData) {
     if (data.follower_name !== '-') {
       drawSection('Data Pengikut', [
         { label: 'Nama Pengikut', value: data.follower_name },
-        { label: 'NIK Pengikut', value: data.follower_nik }
+        { label: 'NIK Pengikut', value: data.follower_nik },
+        { label: 'Email', value: data.follower_email },
+        { label: 'No. WA', value: data.follower_wa },
+        { label: 'Alamat Lengkap', value: data.follower_address }
       ]);
     }
 
@@ -202,28 +201,13 @@ export async function deleteVisitor(id) {
   try {
     const db = getDb();
     
-    // 1. Get visitor data to find file paths
-    const result = await db.execute({
-      sql: 'SELECT visitor_ktp_url, follower_ktp_url FROM visitors WHERE id = ?',
+    // Content is stored as Base64 in DB, no files to delete from disk
+    const visitor = (await db.execute({
+      sql: 'SELECT id FROM visitors WHERE id = ?',
       args: [id]
-    });
+    })).rows[0];
     
-    const visitor = result.rows[0];
-    if (visitor) {
-      // 2. Delete files from filesystem
-      const filesToDelete = [visitor.visitor_ktp_url, visitor.follower_ktp_url].filter(Boolean);
-      
-      for (const fileUrl of filesToDelete) {
-        try {
-          const filePath = path.join(process.cwd(), 'public', fileUrl);
-          if (fs.existsSync(filePath)) {
-            fs.unlinkSync(filePath);
-          }
-        } catch (fileErr) {
-          console.error('Error deleting file:', fileUrl, fileErr);
-        }
-      }
-    }
+    if (!visitor) return { success: false, message: 'Visitor not found' };
 
     // 3. Delete from database
     await db.execute({

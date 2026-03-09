@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { authenticate } from '@/app/actions/auth';
+import { getSettings } from '@/app/actions/settings';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -9,7 +10,18 @@ import Link from 'next/link';
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [logo, setLogo] = useState('/logo-kemen.png');
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchLogo = async () => {
+      const res = await getSettings();
+      if (res.success && res.settings.app_logo) {
+        setLogo(res.settings.app_logo);
+      }
+    };
+    fetchLogo();
+  }, []);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -58,12 +70,10 @@ export default function LoginPage() {
       }}>
         <div style={{ textAlign: 'center', marginBottom: '3rem' }}>
           <div style={{ position: 'relative', width: '110px', height: '110px', margin: '0 auto 1.5rem auto', display: 'flex', justifyContent: 'center' }}>
-            <Image 
-              src="/logo-kemen.png" 
+            <img 
+              src={logo} 
               alt="Logo Kementerian" 
-              width={110}
-              height={110}
-              style={{ objectFit: 'contain' }} 
+              style={{ width: '110px', height: '110px', objectFit: 'contain' }} 
             />
           </div>
           <h1 style={{ color: '#0F172A', fontSize: '1.85rem', fontWeight: 800, fontFamily: 'Outfit, sans-serif', letterSpacing: '-0.5px', marginBottom: '0.5rem' }}>
