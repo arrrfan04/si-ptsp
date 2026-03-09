@@ -8,8 +8,14 @@ const dbPath = path.resolve(__dirname, '../si-ptsp.db');
 async function setup() {
   console.log('Initializing database...');
   
+const url = process.env.TURSO_DATABASE_URL || ('file:' + dbPath);
+  const authToken = process.env.TURSO_AUTH_TOKEN;
+
+  console.log(`Connecting to database at: ${url}`);
+  
   const client = createClient({
-    url: 'file:' + dbPath,
+    url: url,
+    authToken: authToken
   });
 
   // Create tables using executeMultiple for batched statements

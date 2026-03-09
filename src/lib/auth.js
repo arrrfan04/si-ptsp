@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-const secretKey = 'si-ptsp-secret-key-change-in-production';
+const secretKey = process.env.AUTH_SECRET || 'si-ptsp-secret-key-change-in-production';
 const key = new TextEncoder().encode(secretKey);
 
 export async function encrypt(payload) {
