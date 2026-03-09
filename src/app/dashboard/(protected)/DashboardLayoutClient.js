@@ -219,7 +219,7 @@ export default function DashboardLayoutClient({ children, session, logo }) {
         </main>
       </div>
 
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 1024px) {
           .dashboard-sidebar {
             transform: translateX(-100%);
@@ -247,7 +247,7 @@ export default function DashboardLayoutClient({ children, session, logo }) {
             display: none !important;
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 }

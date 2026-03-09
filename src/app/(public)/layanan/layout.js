@@ -1,6 +1,5 @@
 'use client';
 
-import PublicLayout from '../(public)/layout';
 import { usePathname } from 'next/navigation';
 
 export default function LayananLayout({ children }) {
@@ -19,7 +18,7 @@ export default function LayananLayout({ children }) {
   const headerInfo = getHeaderInfo();
 
   return (
-    <PublicLayout>
+    <>
       <div style={{ backgroundColor: 'var(--primary-blue-light)', padding: '5rem 0 3rem 0', borderBottom: '1px solid var(--gray-border)' }}>
         <div className="container text-center animate-up">
           <div style={{ fontSize: '3.5rem', marginBottom: '1rem' }}>{headerInfo.icon}</div>
@@ -30,6 +29,6 @@ export default function LayananLayout({ children }) {
       <div style={{ backgroundColor: 'var(--bg-color)', minHeight: '50vh', padding: '3rem 0' }}>
         {children}
       </div>
-    </PublicLayout>
+    </>
   );
 }

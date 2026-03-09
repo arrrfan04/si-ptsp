@@ -120,7 +120,7 @@ export default function Header({ logo }) {
         }}>Login Portal</Link>
       </div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .nav-link-header {
           color: white;
           text-decoration: none;
@@ -141,11 +141,11 @@ export default function Header({ logo }) {
           font-weight: 700;
           text-decoration: none;
           transition: all 0.3s;
-          boxShadow: 0 4px 15px rgba(59, 172, 247, 0.2);
+          box-shadow: 0 4px 15px rgba(59, 172, 247, 0.2);
         }
         .btn-login-portal:hover {
           transform: translateY(-2px);
-          boxShadow: 0 8px 20px rgba(59, 172, 247, 0.3);
+          box-shadow: 0 8px 20px rgba(59, 172, 247, 0.3);
           background-color: #2b9ce6;
         }
         @media (max-width: 1024px) {
@@ -164,7 +164,7 @@ export default function Header({ logo }) {
           color: #3BACF7;
           transform: scale(1.05);
         }
-      `}</style>
+      ` }} />
     </header>
   );
 }

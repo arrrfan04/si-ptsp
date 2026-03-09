@@ -75,12 +75,12 @@ export function NotificationProvider({ children }) {
         ))}
       </div>
       
-      <style jsx global>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @keyframes slideIn {
           from { transform: translateX(100%); opacity: 0; }
           to { transform: translateX(0); opacity: 1; }
         }
-      `}</style>
+      ` }} />
     </NotificationContext.Provider>
   );
 }

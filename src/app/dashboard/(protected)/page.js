@@ -92,7 +92,7 @@ export default async function DashboardHome() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 768px) {
           .dashboard-hero-card {
             padding: 2rem !important;
@@ -116,7 +116,7 @@ export default async function DashboardHome() {
             font-size: 2rem !important;
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 }

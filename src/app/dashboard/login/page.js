@@ -184,7 +184,7 @@ export default function LoginPage() {
         </div>
       </div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .login-input:focus {
           border-color: #3BACF7 !important;
           background-color: white !important;
@@ -206,7 +206,7 @@ export default function LoginPage() {
           20%, 60% { transform: translateX(-5px); }
           40%, 80% { transform: translateX(5px); }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 }

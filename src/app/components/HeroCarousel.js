@@ -121,7 +121,7 @@ export default function HeroCarousel({ settings }) {
         ))}
       </div>
 
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         .hero-title {
           font-size: 4rem;
           font-weight: 800;
@@ -153,7 +153,7 @@ export default function HeroCarousel({ settings }) {
           display: flex;
           justify-content: center;
           gap: 1rem;
-          zIndex: 10;
+          z-index: 10;
         }
 
         @media (max-width: 1024px) {
@@ -172,7 +172,7 @@ export default function HeroCarousel({ settings }) {
            .hero-carousel { height: 550px !important; }
            .hero-title { font-size: 2rem; }
         }
-      `}</style>
+      ` }} />
     </section>
   );
 }

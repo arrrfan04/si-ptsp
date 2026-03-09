@@ -84,7 +84,7 @@ export default function KunjunganPage() {
   return (
     <div className="container py-4">
       <div className="form-card animate-up" id="kunjungan-form-card" style={{ maxWidth: '850px', margin: '0 auto' }}>
-        <style jsx>{`
+        <style dangerouslySetInnerHTML={{ __html: `
           #kunjungan-form-card {
             padding: 3.5rem;
           }
@@ -93,7 +93,7 @@ export default function KunjunganPage() {
               padding: 1.5rem !important;
             }
           }
-        `}</style>
+        ` }} />
         {error && (
           <div style={{ padding: '1.25rem', backgroundColor: '#FEF2F2', border: '1px solid #FCA5A5', color: '#DC2626', borderRadius: '0.75rem', marginBottom: '2rem', display: 'flex', alignItems: 'center', gap: '0.75rem', fontWeight: 600 }}>
              <span>⚠️</span> {error}
@@ -267,13 +267,13 @@ export default function KunjunganPage() {
           </div>
         </form>
       </div>
-      <style jsx>{`
+      <style dangerouslySetInnerHTML={{ __html: `
         @media (min-width: 768px) {
           .md-grid-2 {
             grid-template-columns: repeat(2, 1fr) !important;
           }
         }
-      `}</style>
+      ` }} />
     </div>
   );
 }
