@@ -28,10 +28,12 @@ export default function Header({ logo }) {
       backdropFilter: scrolled ? 'blur(12px)' : 'none',
       padding: scrolled ? '0.6rem 0' : '1rem 0', 
       boxShadow: scrolled ? '0 10px 15px -3px rgba(0, 0, 0, 0.3)' : 'none', 
-      position: 'sticky', 
+      position: 'fixed', 
+      width: '100%',
       top: 0, 
+      left: 0,
       zIndex: 2000, // Ensure it's above everything
-      transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
     }}>
       <div className="container flex justify-between items-center" style={{ padding: '0 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>

@@ -65,6 +65,7 @@ const url = process.env.TURSO_DATABASE_URL || ('file:' + dbPath);
       wbp_name TEXT NOT NULL,
       case_type TEXT,
       remission_details TEXT,
+      sentence_reduction TEXT,
       created_at DATETIME DEFAULT CURRENT_TIMESTAMP
     );
 
@@ -107,7 +108,11 @@ const url = process.env.TURSO_DATABASE_URL || ('file:' + dbPath);
     { key: 'link_esurvey_3', value: '#' },
     { key: 'link_pengaduan_gratifikasi', value: 'https://www.lapor.go.id/' },
     { key: 'link_pengaduan_calo', value: 'https://www.kpk.go.id/id/layanan/pengaduan-dugaan-tindak-pidana-korupsi' },
-    { key: 'link_pengaduan_pungli', value: 'https://ombudsman.go.id/pengaduan?lang=en/' }
+    { key: 'link_pengaduan_pungli', value: 'https://ombudsman.go.id/pengaduan?lang=en/' },
+    { key: 'app_logo', value: null },
+    { key: 'hero_image_1', value: null },
+    { key: 'hero_image_2', value: null },
+    { key: 'hero_image_3', value: null }
   ];
 
   for (const setting of defaultSettings) {

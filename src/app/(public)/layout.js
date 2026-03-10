@@ -10,7 +10,7 @@ export default async function PublicLayout({ children }) {
     <div className="layout-wrapper">
       <Header logo={logo} />
 
-      <main style={{ minHeight: 'calc(100vh - 400px)' }}>
+      <main style={{ minHeight: 'calc(100vh - 400px)', paddingTop: '80px' }}>
         {children}
       </main>
 

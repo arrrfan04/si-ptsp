@@ -16,7 +16,7 @@ export async function GET(request, { params }) {
     const db = getDb();
     const result = await db.execute({
       sql: 'SELECT * FROM visitors WHERE id = ?',
-      args: [id]
+      args: [Number(id)]
     });
     
     const v = result.rows[0];

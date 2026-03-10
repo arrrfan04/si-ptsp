@@ -74,9 +74,12 @@ export async function deleteNews(id) {
 export async function getNewsById(id) {
   try {
     const db = getDb();
+    const resId = Number(id);
+    if (isNaN(resId)) return { success: false, message: 'Invalid ID' };
+
     const result = await db.execute({
       sql: 'SELECT * FROM news WHERE id = ?',
-      args: [Number(id)]
+      args: [resId]
     });
     
     if (result.rows.length === 0) {
