@@ -19,12 +19,12 @@ export default async function AOSettingsDashboard() {
 
   return (
     <div className="animate-up">
-      <div style={{ marginBottom: '3rem' }}>
+      <div style={{ marginBottom: '3rem' }} className="dashboard-page-header">
         <h2 style={{ fontSize: '2rem', fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#0F172A' }}>Pengaturan Layanan (AO)</h2>
         <p style={{ color: '#64748B', fontSize: '1rem', marginTop: '0.5rem' }}>Kelola tautan formulir, blanko integrasi, dan portal survey eksternal.</p>
       </div>
       
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }}>
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '3rem' }} className="settings-container">
         
         {/* Integrasi Card */}
         <div className="form-card">
@@ -36,7 +36,7 @@ export default async function AOSettingsDashboard() {
             </div>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))', gap: '1.5rem' }}>
+          <div className="settings-grid-integrasi">
             {serviceLinks.map(item => (
               <SettingForm 
                 key={item.key} 
@@ -59,7 +59,7 @@ export default async function AOSettingsDashboard() {
             </div>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.5rem' }}>
+          <div className="settings-grid-esurvey">
             {[1, 2, 3].map(num => (
               <SettingForm 
                 key={num} 
@@ -100,7 +100,7 @@ export default async function AOSettingsDashboard() {
             </div>
           </div>
           
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(350px, 1fr))', gap: '2rem' }}>
+          <div className="settings-grid-pengaduan">
             <SettingForm 
               settingKey="link_pengaduan_gratifikasi" 
               label="E-Lapor (Gratifikasi)" 
@@ -122,6 +122,38 @@ export default async function AOSettingsDashboard() {
           </div>
         </div>
       </div>
+      <style dangerouslySetInnerHTML={{ __html: `
+        .settings-grid-integrasi {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+          gap: 1.5rem;
+        }
+        .settings-grid-esurvey {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 1.5rem;
+        }
+        .settings-grid-pengaduan {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+          gap: 2rem;
+        }
+        @media (max-width: 1024px) {
+          .settings-container {
+            gap: 1.5rem !important;
+          }
+          .settings-grid-integrasi, .settings-grid-esurvey, .settings-grid-pengaduan {
+            grid-template-columns: 1fr !important;
+            gap: 1rem !important;
+          }
+          .dashboard-page-header {
+            margin-bottom: 2rem !important;
+          }
+          .dashboard-page-header h2 {
+            font-size: 1.5rem !important;
+          }
+        }
+      `}} />
     </div>
   );
 }

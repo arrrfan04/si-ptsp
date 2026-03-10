@@ -8,6 +8,7 @@ import path from 'path';
 
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import sharp from 'sharp';
+import { formatToWIT } from '@/lib/dateUtils';
 
 async function saveFile(file) {
   if (!file || file.size === 0) return null;
@@ -81,16 +82,16 @@ export async function submitVisitorForm(formData) {
     const page = pdfDoc.addPage([595.28, 841.89]); // A4 size
     const { width, height } = page.getSize();
     
-    const timesRomanFont = await pdfDoc.embedFont(StandardFonts.TimesRoman);
-    const timesRomanBoldFont = await pdfDoc.embedFont(StandardFonts.TimesRomanBold);
+    const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+    const helveticaBoldFont = await pdfDoc.embedFont(StandardFonts.HelveticaBold);
 
-    const drawText = (text, x, y, size = 12, font = timesRomanFont, color = rgb(0,0,0)) => {
-      page.drawText(String(text), { x, y, size, font, color });
+    const drawText = (text, x, y, size = 11, font = helveticaFont, color = rgb(0,0,0)) => {
+      page.drawText(String(text || '-'), { x, y, size, font, color });
     };
 
     // Header
-    drawText('BUKTI PENDAFTARAN KUNJUNGAN', width / 2 - 120, height - 50, 16, timesRomanBoldFont);
-    drawText('LEMBAGA PEMASYARAKATAN PEREMPUAN KELAS III TERNATE', width / 2 - 180, height - 70, 12, timesRomanBoldFont);
+    drawText('FORM PENDAFTARAN KUNJUNGAN WBP', width / 2 - 120, height - 50, 14, helveticaBoldFont);
+    drawText('SI PTSP LPP TERNATE', width / 2 - 60, height - 70, 12, helveticaBoldFont);
     
     // Separator line
     page.drawLine({ start: { x: 50, y: height - 90 }, end: { x: width - 50, y: height - 90 }, thickness: 1, color: rgb(0,0,0) });
@@ -99,51 +100,51 @@ export async function submitVisitorForm(formData) {
     
     // Draw Section
     const drawSection = (title, items) => {
-      drawText(title, 50, currentY, 14, timesRomanBoldFont);
+      drawText(title, 50, currentY, 12, helveticaBoldFont);
       currentY -= 20;
       items.forEach(item => {
-        drawText(`${item.label}`, 50, currentY, 12, timesRomanBoldFont);
-        drawText(':', 160, currentY, 12, timesRomanBoldFont);
-        drawText(`${item.value}`, 175, currentY, 12, timesRomanFont);
-        currentY -= 20;
+        drawText(`${item.label}`, 50, currentY, 11, helveticaBoldFont);
+        drawText(':', 160, currentY, 11, helveticaBoldFont);
+        drawText(`${item.value}`, 175, currentY, 11, helveticaFont);
+        currentY -= 18;
       });
       currentY -= 10;
     };
 
-    drawSection('Data Pengunjung Utama', [
+    drawSection('A. DATA PENGUNJUNG UTAMA', [
       { label: 'Nama Lengkap', value: data.visitor_name },
-      { label: 'NIK', value: data.visitor_nik },
+      { label: 'NIK KTP', value: data.visitor_nik },
       { label: 'Tujuan', value: data.visitor_purpose },
-      { label: 'No. WA', value: data.visitor_wa },
+      { label: 'Email', value: data.visitor_email },
+      { label: 'No. Telepon / WA', value: data.visitor_wa },
+      { label: 'Alamat Lengkap', value: data.visitor_address },
       { label: 'Tanggal Kunjungan', value: data.visitor_date },
     ]);
 
     if (data.follower_name !== '-') {
-      drawSection('Data Pengikut', [
-        { label: 'Nama Pengikut', value: data.follower_name },
+      drawSection('B. DATA PENGIKUT', [
+        { label: 'Nama Lengkap', value: data.follower_name },
         { label: 'NIK Pengikut', value: data.follower_nik },
         { label: 'Email', value: data.follower_email },
-        { label: 'No. WA', value: data.follower_wa },
+        { label: 'No. Telepon / WA', value: data.follower_wa },
         { label: 'Alamat Lengkap', value: data.follower_address }
       ]);
     }
 
-    drawSection('Data WBP yang Dikunjungi', [
+    drawSection('C. DATA WBP (WARGA BINAAN)', [
       { label: 'Nama WBP', value: data.wbp_name },
-      { label: 'Kasus', value: data.wbp_case },
+      { label: 'Jenis Kasus', value: data.wbp_case },
     ]);
 
     // Footer
+    currentY -= 20;
+    drawText('Catatan:', 50, currentY, 10, helveticaBoldFont);
+    currentY -= 15;
+    drawText('1. Harap membawa dokumen asli (KTP) saat berkunjung.', 50, currentY, 9, helveticaFont);
+    currentY -= 15;
+    drawText('2. Patuhi tata tertib berpakaian dan aturan kunjungan lapas.', 50, currentY, 9, helveticaFont);
     currentY -= 30;
-    drawText('Catatan:', 50, currentY, 12, timesRomanBoldFont);
-    currentY -= 15;
-    drawText('1. Harap membawa dokumen asli (KTP) saat berkunjung.', 50, currentY, 10, timesRomanFont);
-    currentY -= 15;
-    drawText('2. Patuhi tata tertib berpakaian dan aturan kunjungan lapas.', 50, currentY, 10, timesRomanFont);
-    currentY -= 15;
-    drawText('3. Tunjukkan bukti pendaftaran ini kepada petugas.', 50, currentY, 10, timesRomanFont);
-    currentY -= 30;
-    drawText(`Dicetak pada: ${new Date().toLocaleString('id-ID')}`, 50, currentY, 10, timesRomanFont);
+    drawText(`Dicetak pada: ${formatToWIT(new Date())}`, 50, currentY, 9, helveticaFont, rgb(0.3, 0.3, 0.3));
 
 
 

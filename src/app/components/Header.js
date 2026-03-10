@@ -11,7 +11,7 @@ export default function Header({ logo }) {
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
+      setScrolled(window.scrollY > 5);
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
@@ -33,7 +33,7 @@ export default function Header({ logo }) {
       top: 0, 
       left: 0,
       zIndex: 2000, // Ensure it's above everything
-      transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+      transition: 'background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
     }}>
       <div className="container flex justify-between items-center" style={{ padding: '0 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>

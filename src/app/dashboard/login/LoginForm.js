@@ -28,10 +28,9 @@ export default function LoginForm({ logo }) {
   }
 
   return (
-    <div className="card animate-up" style={{ 
+    <div className="card animate-up login-card-container" style={{ 
       width: '100%', 
       maxWidth: '460px', 
-      padding: '3.5rem 3rem', 
       backgroundColor: 'rgba(255, 255, 255, 0.98)',
       backdropFilter: 'blur(20px)',
       borderRadius: '2rem',
@@ -156,6 +155,17 @@ export default function LoginForm({ logo }) {
       </div>
 
       <style dangerouslySetInnerHTML={{ __html: `
+        .login-card-container {
+          padding: 3.5rem 3rem;
+        }
+        @media (max-width: 640px) {
+          .login-card-container {
+            padding: 2.5rem 1.5rem !important;
+          }
+          .login-card-container h1 {
+            font-size: 1.5rem !important;
+          }
+        }
         .login-input:focus {
           border-color: #3BACF7 !important;
           background-color: white !important;

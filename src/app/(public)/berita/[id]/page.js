@@ -26,7 +26,7 @@ export default async function NewsDetailPage({ params }) {
           <div style={{ color: 'var(--primary-blue)', fontWeight: 700, textTransform: 'uppercase', fontSize: '0.85rem', marginBottom: '1rem', letterSpacing: '1px' }}>
             {parseDate(news.created_at).toLocaleDateString('id-ID', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Jayapura' })}
           </div>
-          <h1 style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2, marginBottom: '2rem' }}>
+          <h1 className="news-detail-title" style={{ fontWeight: 800, color: 'var(--text-main)', lineHeight: 1.2, marginBottom: '2rem' }}>
             {news.title}
           </h1>
           

@@ -30,7 +30,13 @@ export async function login(user) {
 
   // Save the session in a cookie
   const cookieStore = await cookies();
-  cookieStore.set('session', session, { expires, httpOnly: true });
+  cookieStore.set('session', session, { 
+    expires, 
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    path: '/',
+  });
 }
 
 export async function logout() {

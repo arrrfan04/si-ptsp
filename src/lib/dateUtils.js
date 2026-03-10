@@ -39,3 +39,16 @@ export function parseDate(dateVal) {
   const fallback = new Date(str);
   return isNaN(fallback.getTime()) ? new Date() : fallback;
 }
+
+/**
+ * Formats a date specifically for WIT (Waktu Indonesia Timur / UTC+9)
+ * Used for Ternate local time display.
+ */
+export function formatToWIT(date) {
+  const d = parseDate(date);
+  return new Intl.DateTimeFormat('id-ID', {
+    dateStyle: 'long',
+    timeStyle: 'medium',
+    timeZone: 'Asia/Jayapura' // Jayapura is WIT (UTC+9)
+  }).format(d) + ' WIT';
+}

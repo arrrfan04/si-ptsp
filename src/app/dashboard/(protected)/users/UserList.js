@@ -68,12 +68,23 @@ export default function UserList({ users }) {
       boxShadow: '0 10px 30px rgba(0,0,0,0.03)',
       border: '1px solid #E2E8F0'
     }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2.5rem' }} className="list-header">
         <div>
           <h3 style={{ fontSize: '1.5rem', fontFamily: 'Outfit, sans-serif', fontWeight: 800, color: '#0F172A' }}>Daftar Pengguna</h3>
           <p style={{ color: '#64748B', fontSize: '0.9rem', marginTop: '0.25rem' }}>Kelola akses dan peran pengguna sistem SI PTSP.</p>
         </div>
       </div>
+
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 640px) {
+          .list-header {
+            margin-bottom: 1.5rem !important;
+          }
+          .list-header h3 {
+            font-size: 1.25rem !important;
+          }
+        }
+      `}} />
 
       <div style={{ overflowX: 'auto' }}>
         <table style={{ width: '100%', borderCollapse: 'separate', borderSpacing: '0 0.75rem', textAlign: 'left' }}>

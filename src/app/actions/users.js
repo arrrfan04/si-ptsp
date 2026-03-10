@@ -46,9 +46,26 @@ export async function deleteUser(id) {
 
   try {
     const db = getDb();
+    const numericId = Number(id);
+
+    // Safety 1: Don't delete self
+    if (numericId === Number(session.user.id)) {
+      return { success: false, message: 'Anda tidak dapat menghapus akun sendiri yang sedang aktif' };
+    }
+
+    // Safety 2: Check if target is 'admin' username
+    const checkRes = await db.execute({
+      sql: 'SELECT username FROM users WHERE id = ?',
+      args: [numericId]
+    });
+    const target = checkRes.rows[0];
+    if (target?.username === 'admin') {
+      return { success: false, message: 'Akun administrator utama tidak dapat dihapus' };
+    }
+
     await db.execute({
       sql: 'DELETE FROM users WHERE id = ?',
-      args: [id]
+      args: [numericId]
     });
     
     revalidatePath('/dashboard/users');
@@ -73,7 +90,7 @@ export async function updateUserPassword(id, newPassword) {
     
     await db.execute({
       sql: 'UPDATE users SET password = ? WHERE id = ?',
-      args: [hash, id]
+      args: [hash, Number(id)]
     });
     
     revalidatePath('/dashboard/users');

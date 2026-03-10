@@ -33,7 +33,7 @@ export default function SettingForm({ settingKey, label, initialValue, icon, typ
       <label className="form-label-premium" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
         {icon && <span>{icon}</span>} {label}
       </label>
-      <div style={{ display: 'flex', gap: '0.75rem' }}>
+      <div className="setting-form-row">
         <input 
           type={type} 
           name="val" 
@@ -45,6 +45,21 @@ export default function SettingForm({ settingKey, label, initialValue, icon, typ
         />
         <button type="submit" className="btn-secondary-premium">Update</button>
       </div>
+      
+      <style dangerouslySetInnerHTML={{ __html: `
+        .setting-form-row {
+          display: flex;
+          gap: 0.75rem;
+        }
+        @media (max-width: 480px) {
+          .setting-form-row {
+            flex-direction: column !important;
+          }
+          .setting-form-row button {
+            width: 100% !important;
+          }
+        }
+      `}} />
     </form>
   );
 }

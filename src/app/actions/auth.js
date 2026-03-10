@@ -8,9 +8,12 @@ import { revalidatePath } from 'next/cache';
 export async function authenticate(username, password) {
   try {
     const db = getDb();
+    const cleanUsername = username?.trim();
+    const cleanPassword = password?.trim();
+
     const result = await db.execute({
       sql: 'SELECT * FROM users WHERE username = ?',
-      args: [username]
+      args: [cleanUsername]
     });
     
     const user = result.rows[0];

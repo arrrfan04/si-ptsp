@@ -2,7 +2,7 @@ import { getDb } from '@/lib/db';
 import { getSession } from '@/lib/auth';
 import { PDFDocument, rgb, StandardFonts } from 'pdf-lib';
 import { NextResponse } from 'next/server';
-import { parseDate } from '@/lib/dateUtils';
+import { parseDate, formatToWIT } from '@/lib/dateUtils';
 
 export async function GET(request, { params }) {
   const session = await getSession();
@@ -57,25 +57,19 @@ export async function GET(request, { params }) {
       y -= lineHeight;
     };
 
-    page.drawText('A. DATA WBP', { x: 50, y, size: 12, font: fontBold });
-    y -= 25;
-    printLine('Nama WBP', v.wbp_name);
-    printLine('Jenis Kasus', v.wbp_case);
-    
-    y -= 15;
-    page.drawText('B. DATA PENGUNJUNG UTAMA', { x: 50, y, size: 12, font: fontBold });
+    page.drawText('A. DATA PENGUNJUNG UTAMA', { x: 50, y, size: 12, font: fontBold });
     y -= 25;
     printLine('Nama Lengkap', v.visitor_name);
     printLine('NIK KTP', v.visitor_nik);
     printLine('Tujuan', v.visitor_purpose);
-    printLine('Tanggal Kunjungan', v.visitor_date);
     printLine('Email', v.visitor_email);
     printLine('No. Telepon / WA', v.visitor_wa);
     printLine('Alamat Lengkap', v.visitor_address);
+    printLine('Tanggal Kunjungan', v.visitor_date);
 
     if (v.follower_name && v.follower_name !== '-') {
       y -= 15;
-      page.drawText('C. DATA PENGIKUT', { x: 50, y, size: 12, font: fontBold });
+      page.drawText('B. DATA PENGIKUT', { x: 50, y, size: 12, font: fontBold });
       y -= 25;
       printLine('Nama Lengkap', v.follower_name);
       printLine('NIK Pengikut', v.follower_nik);
@@ -84,13 +78,19 @@ export async function GET(request, { params }) {
       printLine('Alamat Lengkap', v.follower_address);
     }
 
+    y -= 15;
+    page.drawText('C. DATA WBP (WARGA BINAAN)', { x: 50, y, size: 12, font: fontBold });
+    y -= 25;
+    printLine('Nama WBP', v.wbp_name);
+    printLine('Jenis Kasus', v.wbp_case);
+
     y -= 40;
     page.drawText('Dokumen ini digenerate secara otomatis oleh Sistem Informasi PTSP LPP Ternate', { x: 50, y, size: 9, font, color: rgb(0.3, 0.3, 0.3) });
     y -= 15;
     page.drawText('Status: ' + v.status.toUpperCase(), { x: 50, y, size: 9, font: fontBold, color: v.status === 'approved' ? rgb(0, 0.6, 0) : rgb(0.8, 0, 0) });
     y -= 15;
     y -= 15;
-    page.drawText('Dicetak pada: ' + parseDate(new Date()).toLocaleString('id-ID'), { x: 50, y, size: 9, font, color: rgb(0.3, 0.3, 0.3) });
+    page.drawText('Dicetak pada: ' + formatToWIT(new Date()), { x: 50, y, size: 9, font, color: rgb(0.3, 0.3, 0.3) });
 
 
 
