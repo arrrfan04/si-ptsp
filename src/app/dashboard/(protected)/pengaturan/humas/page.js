@@ -30,13 +30,13 @@ export default async function HumasSettingsDashboard() {
             <div style={{ fontSize: '2rem' }}>🖼️</div>
             <div>
               <h3 style={{ fontSize: '1.25rem', fontFamily: 'Outfit', fontWeight: 800, color: '#0F172A' }}>Gambar Carousel Depan</h3>
-              <p style={{ fontSize: '0.85rem', color: '#64748B' }}>Perbarui gambar latar belakang untuk 3 slide utama di Beranda</p>
+              <p style={{ fontSize: '0.85rem', color: '#64748B' }}>Perbarui gambar latar belakang untuk 10 slide utama di Beranda</p>
             </div>
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-            {[1, 2, 3].map((slot) => {
-               const currentImage = settings[`hero_image_${slot}`] || `/hero${slot}.png`;
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((slot) => {
+               const currentImage = settings[`hero_image_${slot}`] || `/hero${slot < 4 ? slot : 1}.png`;
                return (
                  <HeroUploadForm 
                    key={slot} 

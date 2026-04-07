@@ -72,23 +72,6 @@ export default async function AOSettingsDashboard() {
           </div>
         </div>
 
-        {/* Pemindahan Card */}
-        <div className="form-card">
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', marginBottom: '2rem' }}>
-            <div style={{ fontSize: '2rem' }}>🚚</div>
-            <div>
-              <h3 style={{ fontSize: '1.25rem', fontFamily: 'Outfit', fontWeight: 800, color: '#0F172A' }}>Layanan Pemindahan</h3>
-              <p style={{ fontSize: '0.85rem', color: '#64748B' }}>Tautan form permohonan pemindahan WBP</p>
-            </div>
-          </div>
-          <SettingForm 
-            settingKey="link_pemindahan" 
-            label="Link Form Pemindahan" 
-            initialValue={settings.link_pemindahan} 
-            type="url" 
-            placeholder="https://..."
-          />
-        </div>
 
         {/* Pengaduan Card */}
         <div className="form-card">

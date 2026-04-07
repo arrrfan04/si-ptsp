@@ -28,14 +28,22 @@ export async function updateSetting(key, value) {
 
   try {
     const db = getDb();
-    await db.execute({
+    const result = await db.execute({
       sql: 'UPDATE settings SET value = ? WHERE key = ?',
       args: [value, key]
     });
     
+    if (result.rowsAffected === 0) {
+      await db.execute({
+        sql: 'INSERT INTO settings (key, value) VALUES (?, ?)',
+        args: [key, value]
+      });
+    }
+    
     revalidatePath('/', 'layout'); // revalidate all routes to reflect new links
     return { success: true };
   } catch (error) {
+    console.error('Update setting error:', error);
     return { success: false, message: 'Error updating setting' };
   }
 }

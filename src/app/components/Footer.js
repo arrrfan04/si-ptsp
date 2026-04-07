@@ -23,7 +23,7 @@ export default function Footer({ logo }) {
         <div>
           <h3 style={{ marginBottom: '1.5rem', color: 'white', fontSize: '1.2rem', fontWeight: 700 }}>Hubungi Kami</h3>
           <ul style={{ listStyle: 'none', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '1rem', padding: 0 }}>
-            <li>📍 Jl. Raya Kastela, Ternate</li>
+            <li>📍 Jl. Batu Angus, Kel Kastela, Kec. Pulau Ternate - Kota Ternate</li>
             <li>📧 lpp.ternate@kemenimpas.go.id</li>
             <li>📞 (0921) 312-XXXX</li>
             <li>📱 0812-XXXX-XXXX (WhatsApp)</li>
@@ -31,11 +31,9 @@ export default function Footer({ logo }) {
         </div>
 
         <div>
-          <h3 style={{ marginBottom: '1.5rem', color: 'white', fontSize: '1.2rem', fontWeight: 700 }}>Jam Operasional</h3>
+          <h3 style={{ marginBottom: '1.5rem', color: 'white', fontSize: '1.2rem', fontWeight: 700 }}>Jadwal Kunjungan</h3>
           <ul style={{ listStyle: 'none', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '1rem', padding: 0 }}>
-            <li>Senin - Kamis: 08:30 - 15:00 WIT</li>
-            <li>Jumat: 08:30 - 11:30 WIT</li>
-            <li>Sabtu - Minggu: Libur Pelayanan</li>
+            <li>Selasa, Rabu, Kamis, Sabtu: 09:00 - 11:30 WIT</li>
           </ul>
         </div>
       </div>

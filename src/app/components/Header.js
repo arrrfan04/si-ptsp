@@ -26,17 +26,18 @@ export default function Header({ logo }) {
     <header style={{ 
       backgroundColor: scrolled ? 'rgba(15, 23, 42, 0.95)' : '#0F172A',
       backdropFilter: scrolled ? 'blur(12px)' : 'none',
-      padding: scrolled ? '0.6rem 0' : '1rem 0', 
+      padding: '1rem 0', 
       boxShadow: scrolled ? '0 10px 15px -3px rgba(0, 0, 0, 0.3)' : 'none', 
       position: 'fixed', 
       width: '100%',
       top: 0, 
       left: 0,
-      zIndex: 2000, // Ensure it's above everything
-      transition: 'background-color 0.3s ease, padding 0.3s ease, box-shadow 0.3s ease',
+      height: '80px',
+      zIndex: 2000, 
+      transition: 'all 0.3s ease',
       borderBottom: '1px solid rgba(255, 255, 255, 0.1)'
     }}>
-      <div className="container flex justify-between items-center" style={{ padding: '0 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>
+      <div className="container flex justify-between items-center" style={{ padding: '0 1.5rem', maxWidth: '1280px', margin: '0 auto', height: '100%', width: '100%', display: 'flex' }}>
         <Link href="/" className="flex items-center" style={{ zIndex: 1001, gap: '1rem', textDecoration: 'none' }}>
           {logo && (
             <img 

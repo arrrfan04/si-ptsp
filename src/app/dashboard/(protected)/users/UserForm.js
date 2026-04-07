@@ -43,6 +43,7 @@ export default function UserForm() {
             <option value="admin">Administrator</option>
             <option value="humas">Humas (Konten Berita)</option>
             <option value="ao">AO (Tautan Layanan)</option>
+            <option value="pembinaan">Petugas Pembinaan (Layanan Pembinaan)</option>
             <option value="pelayanan">Petugas Layanan (Kunjungan)</option>
           </select>
         </div>

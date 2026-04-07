@@ -2,6 +2,7 @@ import { getSettings } from '../actions/settings';
 import { getNews } from '../actions/news';
 import Link from 'next/link';
 import HeroCarousel from '../components/HeroCarousel';
+import NewsPagination from '../components/NewsPagination';
 import { parseDate } from '@/lib/dateUtils';
 
 export default async function Home() {
@@ -187,10 +188,10 @@ export default async function Home() {
               <p>Laporkan segala bentuk penyimpangan melalui kanal resmi yang terintegrasi.</p>
             </Link>
 
-            <Link href="/layanan/pemindahan" className="service-card">
-              <div className="icon-box">🚌</div>
-              <h3>Informasi Pemindahan</h3>
-              <p>Cek status dan ajukan permohonan pemindahan WBP sesuai prosedur yang berlaku.</p>
+            <Link href="/layanan/pembinaan" className="service-card">
+              <div className="icon-box">🎨</div>
+              <h3>Informasi Pembinaan</h3>
+              <p>Lihat program pembinaan kemandirian dan hasil karya Warga Binaan Pemasyarakatan.</p>
             </Link>
 
             <Link href="/layanan/remisi" className="service-card">
@@ -211,41 +212,12 @@ export default async function Home() {
       {/* News Section */}
       <section id="berita" className="news-section section-padding" style={{ borderTop: '1px solid var(--gray-border)' }}>
         <div className="container">
-          <div className="section-header underline">
+          <div id="warta-terkini" className="section-header underline">
             <h2>Warta Terkini</h2>
             <p style={{ color: 'var(--text-muted)', fontSize: '1.1rem', maxWidth: '600px', margin: '1.5rem auto 0' }}>Liputan kegiatan dan berita terbaru dari Lembaga Pemasyarakatan Perempuan Kelas III Ternate.</p>
           </div>
           
-          {newsList.length === 0 ? (
-            <div className="text-center" style={{ padding: '4rem 0', color: 'var(--text-muted)' }}>
-              Belum ada berita yang dipublikasikan saat ini.
-            </div>
-          ) : (
-            <div className="news-grid">
-              {newsList.map(news => (
-                <article key={news.id} className="news-card">
-                  <Link href={`/berita/${news.id}`} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-                    <div className="news-img">
-                      {news.image_url ? (
-                        <div style={{ width: '100%', height: '100%', backgroundImage: 'url(' + news.image_url + ')', backgroundSize: 'cover', backgroundPosition: 'center' }}></div>
-                      ) : (
-                        <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#94A3B8', fontSize: '2rem' }}>📰</div>
-                      )}
-                    </div>
-                    <div className="news-content">
-                      <div className="news-tag">Kegiatan Terbaru</div>
-                      <h3 className="news-title">{news.title}</h3>
-                      <p style={{ color: 'var(--text-muted)', fontSize: '0.95rem', marginBottom: '1.5rem', display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{news.content}</p>
-                      <div style={{ marginTop: 'auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                         <span style={{ color: 'var(--primary-blue)', fontWeight: 700, fontSize: '0.9rem' }}>Selengkapnya &rarr;</span>
-                         <time style={{ fontSize: '0.8rem', color: '#94A3B8' }}>{parseDate(news.created_at).toLocaleDateString('id-ID', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'Asia/Jayapura' })}</time>
-                      </div>
-                    </div>
-                  </Link>
-                </article>
-              ))}
-            </div>
-          )}
+          <NewsPagination newsList={newsList} />
         </div>
       </section>
     </>

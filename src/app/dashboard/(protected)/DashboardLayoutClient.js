@@ -4,21 +4,23 @@ import { useState, useEffect } from 'react';
 import { logOutAction } from '@/app/actions/auth';
 import { getSettings } from '@/app/actions/settings';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import Image from 'next/image';
 
 export default function DashboardLayoutClient({ children, session, logo }) {
   const pathname = usePathname();
+  const router = useRouter();
   
   const role = session?.user?.role || 'admin';
   const username = session?.user?.username || 'User';
 
   const menuItems = [
-    { label: 'Beranda Dashboard', href: '/dashboard', icon: '🏠', roles: ['admin', 'humas', 'ao', 'pelayanan'] },
+    { label: 'Beranda Dashboard', href: '/dashboard', icon: '🏠', roles: ['admin', 'humas', 'ao', 'pelayanan', 'pembinaan'] },
     { label: 'Management User', href: '/dashboard/users', icon: '👥', roles: ['admin'] },
     { label: 'Data Pengunjung', href: '/dashboard/kunjungan', icon: '📋', roles: ['ao', 'pelayanan'] },
     { label: 'Data Remisi', href: '/dashboard/remisi', icon: '🌟', roles: ['ao'] },
     { label: 'Management Berita', href: '/dashboard/berita', icon: '📰', roles: ['humas'] },
+    { label: 'Management Pembinaan', href: '/dashboard/pembinaan', icon: '🎨', roles: ['pembinaan'] },
     { label: 'Pengaturan Humas', href: '/dashboard/pengaturan/humas', icon: '🎨', roles: ['humas'] },
     { label: 'Update Link Layanan', href: '/dashboard/pengaturan/ao', icon: '🔗', roles: ['ao'] },
   ];
@@ -26,11 +28,38 @@ export default function DashboardLayoutClient({ children, session, logo }) {
   const filteredMenu = menuItems.filter(item => item.roles.includes(role));
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isUnauthorized, setIsUnauthorized] = useState(false);
 
-  // Close mobile menu on route change
+  // Handle resets and protection
   useEffect(() => {
     setIsMobileMenuOpen(false);
-  }, [pathname]);
+    
+    // Smooth landing redirect is now handled server-side for efficiency
+    
+    // Check if current path is allowed for the user role
+    const currentMenuItem = menuItems.find(item => item.href === pathname);
+    if (currentMenuItem && !currentMenuItem.roles.includes(role)) {
+      setIsUnauthorized(true);
+    } else {
+      setIsUnauthorized(false);
+    }
+
+    // Ensure scroll to top on every navigation within the dashboard
+    window.scrollTo(0, 0);
+  }, [pathname, role]);
+
+  if (isUnauthorized) {
+    return (
+      <div style={{ display: 'flex', minHeight: '100vh', alignItems: 'center', justifyContent: 'center', backgroundColor: '#F8FAFC' }}>
+        <div style={{ textAlign: 'center', padding: '3rem', backgroundColor: 'white', borderRadius: '2rem', boxShadow: '0 20px 50px rgba(0,0,0,0.05)' }}>
+          <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>⛔</div>
+          <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0F172A', marginBottom: '1rem' }}>Akses Dibatasi</h2>
+          <p style={{ color: '#64748B', marginBottom: '2rem' }}>Anda tidak memiliki izin untuk mengakses halaman ini.</p>
+          <button onClick={() => window.location.href = '/dashboard'} className="dashboard-hero-btn">Kembali ke Beranda</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', backgroundColor: '#F8FAFC', fontFamily: 'Inter, sans-serif' }}>

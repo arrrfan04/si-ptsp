@@ -20,7 +20,11 @@ export default function LoginForm({ logo }) {
     
     setLoading(false);
     if (result.success) {
-      router.push('/dashboard');
+      if (result.role === 'admin') {
+        router.push('/dashboard');
+      } else {
+        router.push('/dashboard');
+      }
       router.refresh();
     } else {
       setError(result.message || 'Login gagal.');
