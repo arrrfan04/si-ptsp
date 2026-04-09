@@ -2,6 +2,7 @@ import { getSettings } from '@/app/actions/settings';
 import MarqueeForm from './MarqueeForm';
 import HeroUploadForm from './HeroUploadForm';
 import LogoUploadForm from './LogoUploadForm';
+import SocialSettingsForm from './SocialSettingsForm';
 
 export default async function HumasSettingsDashboard() {
   const res = await getSettings();
@@ -23,6 +24,9 @@ export default async function HumasSettingsDashboard() {
 
         {/* Banner/Marquee Card */}
         <MarqueeForm initialValue={settings.marquee_text} />
+
+        {/* Social Media Links Card */}
+        <SocialSettingsForm settings={settings} />
 
         {/* Hero Carousel Images Card */}
         <div className="form-card" style={{ gridColumn: '1 / -1' }}>

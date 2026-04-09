@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
+import SocialLinks from './SocialLinks';
 
-export default function Footer({ logo }) {
+export default function Footer({ logo, socialLinks }) {
   return (
     <footer style={{ backgroundColor: '#0F172A', color: 'white', padding: '5rem 0 2rem 0', borderTop: '1px solid rgba(255,255,255,0.05)' }}>
       <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '4rem', padding: '0 1.5rem', maxWidth: '1280px', margin: '0 auto' }}>
@@ -35,6 +36,15 @@ export default function Footer({ logo }) {
           <ul style={{ listStyle: 'none', color: '#94A3B8', display: 'flex', flexDirection: 'column', gap: '1rem', padding: 0 }}>
             <li>Selasa, Rabu, Kamis, Sabtu: 09:00 - 11:30 WIT</li>
           </ul>
+
+          <div style={{ marginTop: '2.5rem' }}>
+            <SocialLinks 
+              socialLinks={socialLinks} 
+              title="Media Sosial Kami:" 
+              titleStyle={{ fontSize: '1.2rem', color: 'white' }}
+              iconColor="white"
+            />
+          </div>
         </div>
       </div>
       

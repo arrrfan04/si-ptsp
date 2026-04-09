@@ -60,7 +60,7 @@ export default async function PembinaanPage() {
               {items.map((item) => (
                 <div key={item.id} className="pembinaan-card-horizontal animate-up">
                   <div className="pembinaan-content-left">
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                    <div className="pembinaan-meta-wrapper">
                       <ActivityDate dateString={item.created_at} />
                       <h3 className="pembinaan-title-light">{item.title}</h3>
                     </div>
@@ -173,6 +173,13 @@ export default async function PembinaanPage() {
           position: relative;
           box-shadow: 0 10px 25px rgba(0,0,0,0.1);
         }
+
+        .pembinaan-meta-wrapper {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          width: 100%;
+        }
         
         .pembinaan-title-light {
           font-size: 1.4rem;
@@ -209,6 +216,14 @@ export default async function PembinaanPage() {
             border-right: none;
             border-bottom: 1px solid #F1F5F9;
             padding: 2.5rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+          }
+          .pembinaan-meta-wrapper {
+            align-items: center;
+            text-align: center;
           }
           .pembinaan-content-right {
             border-bottom: none;

@@ -2,12 +2,16 @@ import { getNewsById } from '@/app/actions/news';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { parseDate } from '@/lib/dateUtils';
+import { getSettings } from '@/app/actions/settings';
+import SocialLinks from '@/app/components/SocialLinks';
 
 export const dynamic = 'force-dynamic';
 
 export default async function NewsDetailPage({ params }) {
   const { id } = await params;
   const res = await getNewsById(id);
+  const settingsRes = await getSettings();
+  const settings = settingsRes.success ? settingsRes.settings : {};
 
   if (!res.success) {
     notFound();
@@ -68,6 +72,16 @@ export default async function NewsDetailPage({ params }) {
         <p style={{ color: 'var(--text-muted)', maxWidth: '600px', margin: '0 auto 2rem' }}>
           Terima kasih telah membaca informasi terbaru kami. Ikuti terus perkembangan kegiatan dan layanan kami melalui website resmi ini.
         </p>
+
+        <div style={{ marginBottom: '2.5rem', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+          <SocialLinks 
+            socialLinks={settings} 
+            title="Ikuti Media Sosial Kami:" 
+            titleStyle={{ fontSize: '1.1rem', color: 'var(--text-main)', marginBottom: '1.2rem' }}
+            iconColor="var(--primary-blue)"
+          />
+        </div>
+
         <Link href="/" className="btn btn-primary" style={{ padding: '0.8rem 2rem', borderRadius: '50px' }}>
           Kembali ke Beranda
         </Link>

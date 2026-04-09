@@ -2,9 +2,20 @@ import Header from '@/app/components/Header';
 import Footer from '@/app/components/Footer';
 import { getSettings } from '@/app/actions/settings';
 
+export const dynamic = 'force-dynamic';
+
 export default async function PublicLayout({ children }) {
   const settingsRes = await getSettings();
-  const logo = settingsRes.success ? settingsRes.settings.app_logo : null;
+  const settings = settingsRes.success ? settingsRes.settings : {};
+  const logo = settings.app_logo || null;
+  
+  // Extract social links
+  const socialLinks = {
+    social_instagram: settings.social_instagram,
+    social_facebook: settings.social_facebook,
+    social_x: settings.social_x,
+    social_tiktok: settings.social_tiktok
+  };
 
   return (
     <div className="layout-wrapper">
@@ -14,7 +25,7 @@ export default async function PublicLayout({ children }) {
         {children}
       </main>
 
-      <Footer logo={logo} />
+      <Footer logo={logo} socialLinks={socialLinks} />
     </div>
   )
 }
